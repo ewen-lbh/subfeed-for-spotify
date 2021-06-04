@@ -1,30 +1,31 @@
 <script lang="ts">
-	export let name: string;
+	import { spotify, savedTracks } from "./stores";
+	import Logo from "./Logo.svelte";
+	import Nav from "./Nav.svelte";
+	import Checkitout from "./pages/checkitout.svelte";
+	import Newstuff from "./pages/newstuff.svelte";
+	import Maybefollow from "./pages/maybefollow.svelte";
+	import Login from "./pages/login.svelte";
+
+	let current = "";
+	let logged = false
+	$: logged = spotify === null;
+	spotify.subscribe(async client => {
+		savedTracks.set(await client?.user.getTracks())
+	})
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+<Logo />
+<Nav {current} on:navigate={(e) => (current = e.detail)} />
 
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
+{#if !logged}
+	<Login />
+{:else if current == "newstuff"}
+	<Newstuff />
+{:else if current == "checkitout"}
+	<Checkitout />
+{:else if current == "maybefollow"}
+	<Maybefollow />
+{:else}
+	<h1>404</h1>
+{/if}
