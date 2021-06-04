@@ -132,3 +132,4 @@ temp/
 
 # Environment variables
 .env
+public/build
