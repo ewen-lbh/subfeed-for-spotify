@@ -12,7 +12,6 @@ specifiers:
   rollup-plugin-svelte: ^7.1.0
   rollup-plugin-terser: ^7.0.2
   sirv-cli: ^1.0.12
-  spotify-api.js: ^8.0.0
   surge: ^0.23.0
   svelte: ^3.38.2
   svelte-check: ^1.6.0
@@ -24,7 +23,6 @@ specifiers:
 dependencies:
   node-vibrant: 3.2.0-alpha
   sirv-cli: 1.0.12
-  spotify-api.js: 8.0.0
   vite: 2.3.4
 
 devDependencies:
@@ -1787,14 +1785,6 @@ packages:
     dependencies:
       through: 2.3.8
     dev: true
-
-  /spotify-api.js/8.0.0:
-    resolution: {integrity: sha512-NsW1Rsfi907h969Uie+m8aBPJDWsuHv30+hRx2jFzty1FD3cfJtQ/H4rej8gf3mnCTksjXV/TpgRcjingD5y7A==}
-    dependencies:
-      axios: 0.21.1
-    transitivePeerDependencies:
-      - debug
-    dev: false
 
   /sshpk/1.16.1:
     resolution: {integrity: sha512-HXXqVUq7+pcKeLqqZj6mHFUMvXtOJt1uoUx09pFW6011inTMxqI8BA8PM95myrIyyKwdnzjdFjLiE6KBPVtJIg==}

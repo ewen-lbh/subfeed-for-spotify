@@ -29,7 +29,6 @@
   "dependencies": {
     "node-vibrant": "3.2.0-alpha",
     "sirv-cli": "^1.0.12",
-    "spotify-api.js": "^8.0.0",
     "vite": "^2.3.4"
   },
   "description": "A dashboard with some spotify features I wish the official client had",
