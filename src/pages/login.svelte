@@ -1,28 +1,36 @@
 <script lang="ts">
-	import { Client } from "spotify-api.js";
+	import { onMount } from "svelte";
 
 	import Heading from "../Heading.svelte";
-	import { spotify } from "../stores";
+	import {
+		generateCodeVerifier,
+		getTokens,
+		makeAuthorizationRequestURL,
+	} from "../pkce";
+	import { spotify, tokens } from "../stores";
 
-	let credentials = {
-		id: "",
-		secret: "",
-	};
+	onMount(async () => {
+		// localStorage is needed to keep the same code_verifier accross reloads
+		// Else generateCodeVerifier() just generates a different one, and thus
+		// there's a mismatch between the one used to makeAuthorizationRequestURL and respondToCallback.
+		const codeVerifier =
+			window.localStorage.getItem("code_verifier") || generateCodeVerifier();
+		window.localStorage.setItem("code_verifier", codeVerifier);
+		const urlParams = new URLSearchParams(window.location.search);
+		const authCode = urlParams.get("code") || "";
 
-	let login = async (e) => {
-		let client = new Client("grhgiurehregiuh");
-		console.log("created client")
-		await client.login(credentials.id, credentials.secret);
-		spotify.set(client);
-	};
+		if (authCode !== "") {
+			$tokens = await getTokens(authCode, codeVerifier);
+			window.localStorage.setItem("tokens", JSON.stringify($tokens));
+			window.location.search = ""; // Remove ugly unneeded query string (causes a reload)
+		} else {
+			const url = await makeAuthorizationRequestURL(codeVerifier, [
+				"user-library-read",
+			]);
+			console.log(`requesting auth thru ${url}`);
+			window.location.href = url;
+		}
+	});
 </script>
 
-<Heading>Please create a Spotify app and enter your credentials</Heading>
-<form on:submit|preventDefault={login}>
-	<label for="client_id">Client ID</label>
-	<input id="client_id" type="text" bind:value={credentials.id} />
-	<label for="client_secret">Client Secret</label>
-	<input id="client_secret" type="password" />
-
-	<button>Log in</button>
-</form>
+<Heading>Sending you an authentication request...</Heading>

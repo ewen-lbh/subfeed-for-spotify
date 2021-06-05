@@ -1,11 +1,13 @@
-import type { Client, Paging, Saved, Track } from "spotify-api.js";
-import { Writable, writable } from "svelte/store";
+import axios from "axios"
+import type { AxiosInstance } from "axios";
+import { derived, Readable, Writable, writable } from "svelte/store";
+import { readTokensFromLocalStorage, Tokens } from "./pkce";
 
-export const spotify: Writable<Client | null> = writable(null)
+export let tokens: Writable<Tokens> = writable(readTokensFromLocalStorage())
 
-export const savedTracks: Writable<Paging<Saved<"track", Track>>> = writable({
-	limit: 0,
-	offset: 0,
-	total: 0,
-	items: []
-})
+export let spotify: Readable<AxiosInstance> = derived(tokens, (tokens, set) => set(axios.create({
+	baseURL: "https://api.spotify.com/v1/",
+	headers: {
+		Authorization: `Bearer ${tokens.access}`
+	}
+})))

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { spotify, savedTracks } from "./stores";
+	import { spotify, tokens } from "./stores";
 	import Logo from "./Logo.svelte";
 	import Nav from "./Nav.svelte";
 	import Checkitout from "./pages/checkitout.svelte";
@@ -7,18 +7,14 @@
 	import Maybefollow from "./pages/maybefollow.svelte";
 	import Login from "./pages/login.svelte";
 
-	let current = "";
-	let logged = false
-	$: logged = spotify === null;
-	spotify.subscribe(async client => {
-		savedTracks.set(await client?.user.getTracks())
-	})
+	let current = "newstuff";
+	console.log($spotify.get("me"));
 </script>
 
 <Logo />
 <Nav {current} on:navigate={(e) => (current = e.detail)} />
 
-{#if !logged}
+{#if $tokens.access === ""}
 	<Login />
 {:else if current == "newstuff"}
 	<Newstuff />
