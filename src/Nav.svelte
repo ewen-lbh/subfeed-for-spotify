@@ -7,6 +7,11 @@
 	export let current: string;
 	let disabled: boolean;
 	spotify.subscribe((client) => (disabled = client === null));
+
+	const logout = (e) => {
+		window.localStorage.clear()
+		window.location.reload()
+	}
 </script>
 
 <nav>
@@ -29,6 +34,7 @@
 		class={current == "maybefollow" ? "current" : ""}
 		{disabled}>maybefollow</button
 	>
+	<button id="logout" on:click={logout}>logout</button>
 </nav>
 
 <style>
