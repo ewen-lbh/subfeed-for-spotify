@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Heading from "../Heading.svelte";
 	import Release from "../Release.svelte";
-	import { spotify } from "../stores";
+	import { followedArtists, spotify } from "../stores";
 	import type {
 		CursorPaginated,
 		SimplifiedAlbum,
@@ -32,6 +32,7 @@
 			paginatedArtists = response.data.artists
 			artists.push(...paginatedArtists.items);
 		}
+		$followedArtists = artists
 
 		let releases: SimplifiedAlbum[] = [];
 		for (const artist of artists) {
@@ -56,7 +57,7 @@
 {:then releases}
 	<ol>
 		{#each releases as release}
-			<li>
+			<li id={release.id}>
 				<Release {release} />
 			</li>
 		{/each}
