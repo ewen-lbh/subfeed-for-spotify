@@ -25,3 +25,16 @@
 {:else}
 	<h1>404</h1>
 {/if}
+
+<footer>
+	Data from <br>
+	<img src="https://developer.spotify.com/assets/branding-guidelines/logo.png" alt="Spotify" width="200">
+</footer>
+
+<style>
+	footer {
+		margin: 0 auto;
+		height: 100vh;
+		text-align: center;
+	}
+</style>
