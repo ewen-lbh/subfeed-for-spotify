@@ -34,4 +34,4 @@
 	});
 </script>
 
-<Heading>Sending you an authentication request...</Heading>
+<Heading>Logging you in...</Heading>
