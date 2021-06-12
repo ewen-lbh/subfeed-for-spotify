@@ -9,6 +9,15 @@
 		const fullRelease: Album = (await $spotify.get(release.href)).data;
 		return fullRelease.tracks.items;
 	}
+
+	async function playTrack(index: number) {
+		await $spotify.put("me/player/play", {
+			context_uri: release.uri,
+			offset: {
+				position: index
+			}
+		})
+	}
 </script>
 
 <div class="split">
@@ -24,14 +33,15 @@
 		{#if release.album_type === "compilation"}
 			<table>
 				{#await getReleaseTracks()}
-					<li>Loading tracks...</li>
+					<tr>Loading tracks...</tr>
 				{:then tracks}
-					{#each tracks as track}
+					{#each tracks as track, index}
 						<tr
 							data-interesting={intersection(
 								track.artists.map((a) => a.id),
 								$followedArtists.map((a) => a.id)
 							).length > 0}
+							on:click={e => playTrack(index)}
 						>
 							<td class="artists"
 								>{track.artists.map((a) => a.name).join(", ")}</td
@@ -46,13 +56,14 @@
 				{#await getReleaseTracks()}
 					<li>Loading tracks...</li>
 				{:then tracks}
-					{#each tracks as track}
+					{#each tracks as track, index}
 						<li
 							value={track.track_number}
 							data-interesting={intersection(
 								track.artists.map((a) => a.id),
 								$followedArtists.map((a) => a.id)
 							).length > 0}
+							on:click={e => playTrack(index)}
 						>
 							{track.name}
 							{#if track.artists.filter(a => !release.artists.map(a => a.id).includes(a.id) ).length > 1}
