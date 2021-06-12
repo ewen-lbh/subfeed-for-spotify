@@ -18,7 +18,7 @@
 		class="cover"
 	/>
 	<div class="content">
-		<h2>{release.artists[0].name}</h2>
+		<h2>{release.artists.map(a => a.name).join(', ')}</h2>
 		<h3>{release.name}</h3>
 
 		{#if release.album_type === "compilation"}
@@ -55,7 +55,7 @@
 							).length > 0}
 						>
 							{track.name}
-							{#if track.artists.length > 1}
+							{#if track.artists.filter(a => !release.artists.map(a => a.id).includes(a.id) ).length > 1}
 								<span class="featuring"
 									>&mdash; with {track.artists
 										.filter((a) => a.name != release.artists[0].name)
