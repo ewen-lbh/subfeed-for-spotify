@@ -17,7 +17,7 @@
 <nav>
 	<button
 		on:click={(e) => dispatch("navigate", "newstuff")}
-		class={current == "newstuff" ? "current" : ""}
+		class:current={current === "newstuff"}
 		{disabled}
 	>
 		newstuff <button on:click={(e) => dispatch("play-all-newstuff")}
@@ -26,12 +26,12 @@
 	</button>
 	<button
 		on:click={(e) => dispatch("navigate", "checkitout")}
-		class={current == "checkitout" ? "current" : ""}
+		class:current={current == "checkitout"}
 		{disabled}>checkitout</button
 	>
 	<button
 		on:click={(e) => dispatch("navigate", "maybefollow")}
-		class={current == "maybefollow" ? "current" : ""}
+		class:current={current == "maybefollow"}
 		{disabled}>maybefollow</button
 	>
 	<button id="logout" on:click={logout}>logout</button>
