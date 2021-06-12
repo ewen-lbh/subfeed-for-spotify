@@ -1,10 +1,66 @@
 <script lang="ts">
-	import Heading from '../Heading.svelte'
+	import Heading from "../Heading.svelte";
+	import Release from "../Release.svelte";
 	import { spotify } from "../stores";
+	import type {
+		CursorPaginated,
+		SimplifiedAlbum,
+		SimplifiedArtist,
+	} from "../types";
 
-	spotify.subscribe(spotify => {
-		console.log(spotify.get("me"))
-	})
+	let loadedArtists = 0
+	let totalArtists = 0
+
+	async function getReleases() {
+		let paginatedArtists: CursorPaginated<SimplifiedArtist> = (
+			await $spotify.get("me/following?type=artist")
+		).data?.artists;
+
+		if (paginatedArtists === undefined) {
+			throw new Error("Couldn't fetch the artists you follow");
+		}
+
+		let artists: SimplifiedArtist[] = paginatedArtists.items;
+		totalArtists = paginatedArtists.total
+		while (paginatedArtists.next !== null) {
+			let response = await $spotify.get(paginatedArtists.next)
+			while (response.status == 429) {
+				let cooldown = response.headers["Retry-After"]
+				await new Promise(r => setTimeout(r, cooldown * 1000))
+				response = await $spotify.get(paginatedArtists.next)
+			}
+			paginatedArtists = response.data.artists
+			artists.push(...paginatedArtists.items);
+		}
+
+		let releases: SimplifiedAlbum[] = [];
+		for (const artist of artists) {
+			releases.push(
+				...(await $spotify.get(`artists/${artist.id}/albums`)).data?.items
+			);
+			loadedArtists++
+		}
+		releases = releases
+			.filter((r) => r.available_markets.includes("FR"))
+			.sort((a, b) => (a.release_date > b.release_date ? 1 : -1))
+			.reverse()
+			.slice(0, 100);
+		return releases;
+	}
 </script>
 
 <Heading action="play all">New stuff for you</Heading>
+
+{#await getReleases()}
+	<div class="centered">loading... (loaded releases from {loadedArtists}/{totalArtists} artists)</div>
+{:then releases}
+	<ol>
+		{#each releases as release}
+			<li>
+				<Release {release} />
+			</li>
+		{/each}
+	</ol>
+{:catch error}
+	<div class="centered">Sorry. {error.message}</div>
+{/await}

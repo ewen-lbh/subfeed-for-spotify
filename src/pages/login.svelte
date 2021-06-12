@@ -26,6 +26,7 @@
 		} else {
 			const url = await makeAuthorizationRequestURL(codeVerifier, [
 				"user-library-read",
+				"user-follow-read",
 			]);
 			console.log(`requesting auth thru ${url}`);
 			window.location.href = url;
