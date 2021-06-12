@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Artist, Track } from "spotify-api.js";
+import type { Track, Artist } from "./types";
 
 	export let mainArtist: Artist;
 	export let track: Track;
@@ -11,7 +11,7 @@
 		{track.name}
 		{#if track.artists.length > 1}
 			<span class="featuring"
-				>— with {track.artists.filter((a) => a.id != mainArtist.id).join(", ")}</span
+				>— with {track.artists.filter((a) => a.id != mainArtist.id).map(a => a.name).join(", ")}</span
 			>
 		{/if}
 	</p>

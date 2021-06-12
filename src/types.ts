@@ -2,19 +2,25 @@ export interface Paginated<T> {
 	href: string
 	items: T[]
 	limit: number
-	next: string|null
+	next: string | null
 	offset: number
-	previous: string|null
+	previous: string | null
 	total: number
 }
 
 export interface CursorPaginated<T> {
-	cursors: {after: string}[]
+	cursors: { after: string }[]
 	href: string
 	items: T[]
 	limit: number
-	next: string|null
+	next: string | null
 	total: number
+}
+
+export interface Image {
+	width: number | null
+	url: string
+	height: number | null
 }
 
 export interface SimplifiedArtist {
@@ -61,7 +67,20 @@ export interface SimplifiedTrack {
 	uri: string
 }
 
+export interface SavedTrack {
+	added_at: string
+	track: SimplifiedTrack
+}
+
 export interface Album extends SimplifiedAlbum {
 	label: string
 	tracks: Paginated<SimplifiedTrack>
 }
+
+export interface Artist extends SimplifiedArtist {
+	genres: string[]
+	images: Image[]
+	popularity: number
+}
+
+export type ArtistWithSavedTracks = Artist & { savedTracks: SavedTrack[] }
