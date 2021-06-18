@@ -25,7 +25,7 @@
 			);
 		} else {
 			let paginatedSavedTracks: Paginated<SavedTrack> = (
-				await $spotify.get("me/tracks")
+				await $spotify.get("me/tracks?limit=50")
 			).data;
 
 			if (paginatedSavedTracks === undefined) {
