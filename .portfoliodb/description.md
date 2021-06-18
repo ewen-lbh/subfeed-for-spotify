@@ -2,7 +2,7 @@
 created: 2021-05-29
 made with: [svelte]
 wip: yes
-----
+---
 
 # spotifydash
 
@@ -13,4 +13,3 @@ wip: yes
 :: en
 
 [Source code](https://github.com/ewen-lbh/spotifydash)
-
