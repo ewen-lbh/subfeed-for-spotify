@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { spotify, tokens } from "./stores";
+	import { tokens } from "./stores";
 	import Logo from "./Logo.svelte";
 	import Nav from "./Nav.svelte";
 	import Newstuff from "./pages/newstuff.svelte";
@@ -7,7 +7,6 @@
 	import Login from "./pages/login.svelte";
 
 	let current = "newstuff";
-	console.log($spotify.get("me"));
 </script>
 
 <Logo />
