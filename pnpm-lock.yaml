@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@okrad/svelte-progressbar': ^1.11.2
   '@rollup/plugin-commonjs': ^17.1.0
   '@rollup/plugin-node-resolve': ^11.2.1
   '@rollup/plugin-typescript': ^8.2.1
@@ -22,6 +23,7 @@ specifiers:
   vite: ^2.3.4
 
 dependencies:
+  '@okrad/svelte-progressbar': 1.11.2
   axios: 0.21.1
   node-vibrant: 3.2.0-alpha
   sirv-cli: 1.0.12
@@ -383,6 +385,10 @@ packages:
     resolution: {integrity: sha512-7RDfxQ2C/rarNG9iso5vmnKQbcvlQjBIlF/p7/uYj72WeZgVCB+5t1fFBKJSU4WhniHX4jUMijK+wYGE3Y3bGw==}
     dependencies:
       core-js: 2.6.12
+    dev: false
+
+  /@okrad/svelte-progressbar/1.11.2:
+    resolution: {integrity: sha512-gL6EFher4l1FwJ+7N7U7bRemKiIa9vtNMOfez4/S5IBpcb8i7t94B+GyTdrXVfvF1hf2KesjxsyjPGNJ0VFW8Q==}
     dev: false
 
   /@polka/url/1.0.0-next.15:
