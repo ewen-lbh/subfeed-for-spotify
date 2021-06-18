@@ -2,7 +2,6 @@
 	import { spotify, tokens } from "./stores";
 	import Logo from "./Logo.svelte";
 	import Nav from "./Nav.svelte";
-	import Checkitout from "./pages/checkitout.svelte";
 	import Newstuff from "./pages/newstuff.svelte";
 	import Maybefollow from "./pages/maybefollow.svelte";
 	import Login from "./pages/login.svelte";
@@ -18,8 +17,8 @@
 	<Login />
 {:else if current == "newstuff"}
 	<Newstuff />
-{:else if current == "checkitout"}
-	<Checkitout />
+<!-- {:else if current == "checkitout"}
+	<Checkitout /> -->
 {:else if current == "maybefollow"}
 	<Maybefollow />
 {:else}

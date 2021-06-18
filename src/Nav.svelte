@@ -24,11 +24,11 @@
 			><Icon name="play" /></button
 		>
 	</button>
-	<button
+	<!-- <button
 		on:click={(e) => dispatch("navigate", "checkitout")}
 		class:current={current == "checkitout"}
 		{disabled}>checkitout</button
-	>
+	> -->
 	<button
 		on:click={(e) => dispatch("navigate", "maybefollow")}
 		class:current={current == "maybefollow"}
