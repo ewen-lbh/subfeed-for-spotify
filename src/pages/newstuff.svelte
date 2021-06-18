@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Heading from "../Heading.svelte";
 	import Release from "../Release.svelte";
+	import ProgressBar from "@okrad/svelte-progressbar";
 	import { followedArtists, spotify } from "../stores";
 	import type {
 		CursorPaginated,
@@ -48,7 +49,14 @@
 <Heading action="play all">New stuff for you</Heading>
 
 {#await getReleases()}
-	<div class="centered">loading... (loaded releases from {loadedArtists}/{totalArtists} artists)</div>
+	<div class="centerd">
+		<ProgressBar
+			series={totalArtists !== 0
+				? Math.round((loadedArtists / totalArtists) * 100)
+				: 0}
+		/>
+		<p>Loading...</p>
+	</div>
 {:then releases}
 	<ol>
 		{#each releases as release}

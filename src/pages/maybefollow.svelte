@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ProgressBar from "@okrad/svelte-progressbar";
 	import ArtistToFollow from "../ArtistToFollow.svelte";
 
 	import Heading from "../Heading.svelte";
@@ -79,7 +80,13 @@
 <Heading action="follow all">Maybe follow those artists?</Heading>
 
 {#await loadArtistsToFollow()}
-	Loading... (loaded {$library.length}/{totalSavedTracks} tracks)
+	<div class="centered">
+		<ProgressBar
+			series={totalSavedTracks !== 0
+				? Math.round(($library.length / totalSavedTracks) * 100)
+				: 0}
+		/>
+	</div>
 {:then artists}
 	{#each artists as artist}
 		<ArtistToFollow {artist} />
