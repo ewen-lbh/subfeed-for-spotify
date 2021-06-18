@@ -19,10 +19,10 @@
 
 	async function loadArtistsToFollow(): Promise<ArtistWithSavedTracks[]> {
 		let artistsToFollow: Array<ArtistWithSavedTracks> = []
-		if (window.localStorage.getItem("artistsToFollow") !== null) {
-			artistsToFollow = JSON.parse(
-				window.localStorage.getItem("artistsToFollow")
-			)
+		const localStorageArtistsToFollow =
+			window.localStorage.getItem("artistsToFollow")
+		if (localStorageArtistsToFollow !== null) {
+			artistsToFollow = JSON.parse(localStorageArtistsToFollow)
 			//TODO re-check against currently followed artists here.
 			// not as costly as re-checking all liked tracks, and way more relevant.
 		} else {

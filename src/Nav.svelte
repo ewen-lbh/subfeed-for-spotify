@@ -8,10 +8,11 @@
 	let disabled: boolean
 	spotify.subscribe((client) => (disabled = client === null))
 
-	const logout = (_) => {
+	const logout = (_: any) => {
 		window.localStorage.clear()
 		window.location.reload()
 	}
+
 </script>
 
 <nav>
@@ -44,4 +45,5 @@
 	button:not(.current) {
 		font-style: italic;
 	}
+
 </style>
