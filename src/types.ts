@@ -67,9 +67,15 @@ export interface SimplifiedTrack {
 	uri: string
 }
 
+export interface Track extends SimplifiedTrack {
+	album: SimplifiedAlbum
+	artists: Artist[]
+	popularity: number
+}
+
 export interface SavedTrack {
 	added_at: string
-	track: SimplifiedTrack
+	track: Track
 }
 
 export interface Album extends SimplifiedAlbum {
