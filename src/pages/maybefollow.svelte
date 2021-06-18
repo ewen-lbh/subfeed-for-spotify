@@ -36,11 +36,6 @@
 			totalSavedTracks = paginatedSavedTracks.total;
 			while (paginatedSavedTracks.next !== null) {
 				let response = await $spotify.get(paginatedSavedTracks.next);
-				while (response.status == 429) {
-					let cooldown = response.headers["Retry-After"];
-					await new Promise((r) => setTimeout(r, cooldown * 1000));
-					response = await $spotify.get(paginatedSavedTracks.next);
-				}
 				paginatedSavedTracks = response.data;
 				savedTracks.push(...paginatedSavedTracks.items);
 				$library = savedTracks;

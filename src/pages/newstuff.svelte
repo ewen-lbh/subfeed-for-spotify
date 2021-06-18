@@ -23,13 +23,8 @@
 		let artists: SimplifiedArtist[] = paginatedArtists.items;
 		totalArtists = paginatedArtists.total
 		while (paginatedArtists.next !== null) {
-			let response = await $spotify.get(paginatedArtists.next)
-			while (response.status == 429) {
-				let cooldown = response.headers["Retry-After"]
-				await new Promise(r => setTimeout(r, cooldown * 1000))
-				response = await $spotify.get(paginatedArtists.next)
-			}
-			paginatedArtists = response.data.artists
+			let response = await $spotify.get(paginatedArtists.next);
+			paginatedArtists = response.data.artists;
 			artists.push(...paginatedArtists.items);
 		}
 		$followedArtists = artists
