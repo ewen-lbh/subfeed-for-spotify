@@ -1,46 +1,49 @@
 {
-  "name": "spotifydash",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "sirv public --no-clear",
-    "validate": "svelte-check",
-    "upload": "surge public spotifydash.surge.sh"
-  },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.1.0",
-    "@rollup/plugin-node-resolve": "^11.2.1",
-    "@rollup/plugin-typescript": "^8.2.1",
-    "@tsconfig/svelte": "^1.0.13",
-    "rollup": "^2.50.4",
-    "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-svelte": "^7.1.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "surge": "^0.23.0",
-    "svelte": "^3.38.2",
-    "svelte-check": "^1.6.0",
-    "svelte-preprocess": "^4.7.3",
-    "tslib": "^2.2.0",
-    "typescript": "^4.3.2"
-  },
-  "dependencies": {
-    "@okrad/svelte-progressbar": "^1.11.2",
-    "axios": "^0.21.1",
-    "node-vibrant": "3.2.0-alpha",
-    "sirv-cli": "^1.0.12",
-    "vite": "^2.3.4"
-  },
-  "description": "A dashboard with some spotify features I wish the official client had",
-  "keywords": [
-    "spotify",
-    "web",
-    "app",
-    "svelte"
-  ],
-  "homepage": "https://github.com/ewen-lbh/spotifydash",
-  "license": "AGPL-3.0",
-  "author": "Ewen Le Bihan <hey@ewen.works>"
+	"name": "spotifydash",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"build": "rollup -c",
+		"dev": "rollup -c -w",
+		"start": "sirv public --no-clear",
+		"validate": "svelte-check",
+		"upload": "surge public spotifydash.surge.sh",
+		"format": "prettier --plugin-search-dir=. --write ."
+	},
+	"devDependencies": {
+		"@rollup/plugin-commonjs": "^17.1.0",
+		"@rollup/plugin-node-resolve": "^11.2.1",
+		"@rollup/plugin-typescript": "^8.2.1",
+		"@tsconfig/svelte": "^1.0.13",
+		"prettier": "^2.3.1",
+		"prettier-plugin-svelte": "^2.3.1",
+		"rollup": "^2.50.4",
+		"rollup-plugin-css-only": "^3.1.0",
+		"rollup-plugin-livereload": "^2.0.0",
+		"rollup-plugin-svelte": "^7.1.0",
+		"rollup-plugin-terser": "^7.0.2",
+		"surge": "^0.23.0",
+		"svelte": "^3.38.2",
+		"svelte-check": "^1.6.0",
+		"svelte-preprocess": "^4.7.3",
+		"tslib": "^2.2.0",
+		"typescript": "^4.3.2"
+	},
+	"dependencies": {
+		"@okrad/svelte-progressbar": "^1.11.2",
+		"axios": "^0.21.1",
+		"node-vibrant": "3.2.0-alpha",
+		"sirv-cli": "^1.0.12",
+		"vite": "^2.3.4"
+	},
+	"description": "A dashboard with some spotify features I wish the official client had",
+	"keywords": [
+		"spotify",
+		"web",
+		"app",
+		"svelte"
+	],
+	"homepage": "https://github.com/ewen-lbh/spotifydash",
+	"license": "AGPL-3.0",
+	"author": "Ewen Le Bihan <hey@ewen.works>"
 }

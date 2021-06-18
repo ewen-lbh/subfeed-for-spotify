@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { tokens } from "./stores";
-	import Logo from "./Logo.svelte";
-	import Nav from "./Nav.svelte";
-	import Newstuff from "./pages/newstuff.svelte";
-	import Maybefollow from "./pages/maybefollow.svelte";
-	import Login from "./pages/login.svelte";
+	import { tokens } from "./stores"
+	import Logo from "./Logo.svelte"
+	import Nav from "./Nav.svelte"
+	import Newstuff from "./pages/newstuff.svelte"
+	import Maybefollow from "./pages/maybefollow.svelte"
+	import Login from "./pages/login.svelte"
 
-	let current = "newstuff";
+	let current = "newstuff"
 </script>
 
 <Logo />
@@ -16,7 +16,7 @@
 	<Login />
 {:else if current == "newstuff"}
 	<Newstuff />
-<!-- {:else if current == "checkitout"}
+	<!-- {:else if current == "checkitout"}
 	<Checkitout /> -->
 {:else if current == "maybefollow"}
 	<Maybefollow />
@@ -25,8 +25,12 @@
 {/if}
 
 <footer>
-	Data from <br>
-	<img src="https://developer.spotify.com/assets/branding-guidelines/logo.png" alt="Spotify" width="200">
+	Data from <br />
+	<img
+		src="https://developer.spotify.com/assets/branding-guidelines/logo.png"
+		alt="Spotify"
+		width="200"
+	/>
 </footer>
 
 <style>

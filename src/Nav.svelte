@@ -1,14 +1,14 @@
 <script lang="ts">
-	import Icon from "./Icon.svelte";
-	import { createEventDispatcher } from "svelte";
-	const dispatch = createEventDispatcher();
-	import { spotify } from "./stores";
+	import Icon from "./Icon.svelte"
+	import { createEventDispatcher } from "svelte"
+	const dispatch = createEventDispatcher()
+	import { spotify } from "./stores"
 
-	export let current: string;
-	let disabled: boolean;
-	spotify.subscribe((client) => (disabled = client === null));
+	export let current: string
+	let disabled: boolean
+	spotify.subscribe((client) => (disabled = client === null))
 
-	const logout = (e) => {
+	const logout = (_) => {
 		window.localStorage.clear()
 		window.location.reload()
 	}
@@ -16,11 +16,11 @@
 
 <nav>
 	<button
-		on:click={(e) => dispatch("navigate", "newstuff")}
+		on:click={(_) => dispatch("navigate", "newstuff")}
 		class:current={current === "newstuff"}
 		{disabled}
 	>
-		newstuff <button on:click={(e) => dispatch("play-all-newstuff")}
+		newstuff <button on:click={(_) => dispatch("play-all-newstuff")}
 			><Icon name="play" /></button
 		>
 	</button>

@@ -1,13 +1,13 @@
 <script lang="ts">
-	import Heading from "../Heading.svelte";
-	import Release from "../Release.svelte";
-	import ProgressBar from "@okrad/svelte-progressbar";
-	import { followedArtists, spotify } from "../stores";
+	import Heading from "../Heading.svelte"
+	import Release from "../Release.svelte"
+	import ProgressBar from "@okrad/svelte-progressbar"
+	import { followedArtists, spotify } from "../stores"
 	import type {
 		CursorPaginated,
 		SimplifiedAlbum,
 		SimplifiedArtist,
-	} from "../types";
+	} from "../types"
 
 	let loadedArtists = 0
 	let totalArtists = 0
@@ -15,26 +15,26 @@
 	async function getReleases() {
 		let paginatedArtists: CursorPaginated<SimplifiedArtist> = (
 			await $spotify.get("me/following?type=artist")
-		).data?.artists;
+		).data?.artists
 
 		if (paginatedArtists === undefined) {
-			throw new Error("Couldn't fetch the artists you follow");
+			throw new Error("Couldn't fetch the artists you follow")
 		}
 
-		let artists: SimplifiedArtist[] = paginatedArtists.items;
+		let artists: SimplifiedArtist[] = paginatedArtists.items
 		totalArtists = paginatedArtists.total
 		while (paginatedArtists.next !== null) {
-			let response = await $spotify.get(paginatedArtists.next);
-			paginatedArtists = response.data.artists;
-			artists.push(...paginatedArtists.items);
+			let response = await $spotify.get(paginatedArtists.next)
+			paginatedArtists = response.data.artists
+			artists.push(...paginatedArtists.items)
 		}
 		$followedArtists = artists
 
-		let releases: SimplifiedAlbum[] = [];
+		let releases: SimplifiedAlbum[] = []
 		for (const artist of artists) {
 			releases.push(
 				...(await $spotify.get(`artists/${artist.id}/albums`)).data?.items
-			);
+			)
 			loadedArtists++
 		}
 		releases = releases

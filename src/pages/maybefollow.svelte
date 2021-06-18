@@ -1,48 +1,49 @@
 <script lang="ts">
-	import ProgressBar from "@okrad/svelte-progressbar";
-	import ArtistToFollow from "../ArtistToFollow.svelte";
+	import ProgressBar from "@okrad/svelte-progressbar"
+	import ArtistToFollow from "../ArtistToFollow.svelte"
 
-	import Heading from "../Heading.svelte";
-	import { spotify, library, followedArtists } from "../stores";
+	import Heading from "../Heading.svelte"
+	import { spotify, library, followedArtists } from "../stores"
 	import type {
-		Artist,
 		Paginated,
 		SavedTrack,
 		SimplifiedArtist,
 		ArtistWithSavedTracks,
-	} from "../types";
+	} from "../types"
 
 	type SimplifiedArtistWithSavedTracks = SimplifiedArtist & {
-		savedTracks: SavedTrack[];
-	};
+		savedTracks: SavedTrack[]
+	}
 
-	let totalSavedTracks = 0;
+	let totalSavedTracks = 0
 
 	async function loadArtistsToFollow(): Promise<ArtistWithSavedTracks[]> {
-		let artistsToFollow: Array<ArtistWithSavedTracks> = [];
+		let artistsToFollow: Array<ArtistWithSavedTracks> = []
 		if (window.localStorage.getItem("artistsToFollow") !== null) {
 			artistsToFollow = JSON.parse(
 				window.localStorage.getItem("artistsToFollow")
-			);
+			)
+			//TODO re-check against currently followed artists here.
+			// not as costly as re-checking all liked tracks, and way more relevant.
 		} else {
 			let paginatedSavedTracks: Paginated<SavedTrack> = (
 				await $spotify.get("me/tracks?limit=50")
-			).data;
+			).data
 
 			if (paginatedSavedTracks === undefined) {
-				throw new Error("Couldn't fetch the artists you follow");
+				throw new Error("Couldn't fetch the artists you follow")
 			}
 
-			let savedTracks: SavedTrack[] = paginatedSavedTracks.items;
-			totalSavedTracks = paginatedSavedTracks.total;
+			let savedTracks: SavedTrack[] = paginatedSavedTracks.items
+			totalSavedTracks = paginatedSavedTracks.total
 			while (paginatedSavedTracks.next !== null) {
-				let response = await $spotify.get(paginatedSavedTracks.next);
-				paginatedSavedTracks = response.data;
-				savedTracks.push(...paginatedSavedTracks.items);
-				$library = savedTracks;
+				let response = await $spotify.get(paginatedSavedTracks.next)
+				paginatedSavedTracks = response.data
+				savedTracks.push(...paginatedSavedTracks.items)
+				$library = savedTracks
 			}
 
-			let artistsSavedTracks: SimplifiedArtistWithSavedTracks[] = [];
+			let artistsSavedTracks: SimplifiedArtistWithSavedTracks[] = []
 
 			for (const entry of $library) {
 				for (const artist of entry.track.artists) {
@@ -50,9 +51,9 @@
 						if (artistsSavedTracks.map((a) => a.id).includes(artist.id)) {
 							artistsSavedTracks[
 								artistsSavedTracks.map((a) => a.id).indexOf(artist.id)
-							].savedTracks.push(entry);
+							].savedTracks.push(entry)
 						} else {
-							artistsSavedTracks.push({ ...artist, savedTracks: [entry] });
+							artistsSavedTracks.push({ ...artist, savedTracks: [entry] })
 						}
 					}
 				}
@@ -63,21 +64,23 @@
 					artistsToFollow.push({
 						...(await $spotify.get(artist.href)).data,
 						savedTracks: artist.savedTracks,
-					});
+					})
 				}
 			}
 			window.localStorage.setItem(
 				"artistsToFollow",
 				JSON.stringify(artistsToFollow)
-			);
+			)
 		}
-		artistsToFollow = artistsToFollow.sort(a => a.savedTracks.length)
+		artistsToFollow = artistsToFollow.sort((a) => a.savedTracks.length)
 
-		return artistsToFollow;
+		return artistsToFollow
 	}
 </script>
 
 <Heading action="follow all">Maybe follow those artists?</Heading>
+
+<!-- TODO reload button -->
 
 {#await loadArtistsToFollow()}
 	<div class="centered">

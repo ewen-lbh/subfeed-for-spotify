@@ -1,21 +1,21 @@
 <script lang="ts">
-	import { followedArtists, spotify } from "./stores";
-	import type { Album, SimplifiedAlbum, SimplifiedTrack } from "./types";
-	import { intersection } from "./utils";
+	import { followedArtists, spotify } from "./stores"
+	import type { Album, SimplifiedAlbum, SimplifiedTrack } from "./types"
+	import { intersection } from "./utils"
 
-	export let release: SimplifiedAlbum;
+	export let release: SimplifiedAlbum
 
 	async function getReleaseTracks(): Promise<SimplifiedTrack[]> {
-		const fullRelease: Album = (await $spotify.get(release.href)).data;
-		return fullRelease.tracks.items;
+		const fullRelease: Album = (await $spotify.get(release.href)).data
+		return fullRelease.tracks.items
 	}
 
 	async function playTrack(index: number) {
 		await $spotify.put("me/player/play", {
 			context_uri: release.uri,
 			offset: {
-				position: index
-			}
+				position: index,
+			},
 		})
 	}
 </script>
@@ -27,7 +27,7 @@
 		class="cover"
 	/>
 	<div class="content">
-		<h2>{release.artists.map(a => a.name).join(', ')}</h2>
+		<h2>{release.artists.map((a) => a.name).join(", ")}</h2>
 		<h3>{release.name}</h3>
 
 		{#if release.album_type === "compilation"}
@@ -41,7 +41,7 @@
 								track.artists.map((a) => a.id),
 								$followedArtists.map((a) => a.id)
 							).length > 0}
-							on:click={e => playTrack(index)}
+							on:click={(e) => playTrack(index)}
 						>
 							<td class="artists"
 								>{track.artists.map((a) => a.name).join(", ")}</td
@@ -63,10 +63,12 @@
 								track.artists.map((a) => a.id),
 								$followedArtists.map((a) => a.id)
 							).length > 0}
-							on:click={e => playTrack(index)}
+							on:click={(e) => playTrack(index)}
 						>
 							{track.name}
-							{#if track.artists.filter(a => !release.artists.map(a => a.id).includes(a.id) ).length > 1}
+							{#if track.artists.filter((a) => !release.artists
+										.map((a) => a.id)
+										.includes(a.id)).length > 1}
 								<span class="featuring"
 									>&mdash; with {track.artists
 										.filter((a) => a.name != release.artists[0].name)

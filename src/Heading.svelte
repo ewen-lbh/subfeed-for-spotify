@@ -6,8 +6,8 @@
 </script>
 
 <h1>
-	<slot></slot>
+	<slot />
 	{#if action}
-		<button on:click={e => dispatch('action')}>{@html action}</button>
+		<button on:click={(e) => dispatch("action")}>{@html action}</button>
 	{/if}
 </h1>
