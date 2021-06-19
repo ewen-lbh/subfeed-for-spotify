@@ -16,9 +16,22 @@
 	}
 
 	let totalSavedTracks = 0
+	let artistsToFollow: ArtistWithSavedTracks[] = []
+
+	async function follow(...artists: SimplifiedArtist[]) {
+		await $spotify.put(
+			`me/following?type=artist&ids=${artists.map((a) => a.id).join(",")}`
+		)
+		artistsToFollow = artistsToFollow.filter(
+			(a) => !artists.map((a) => a.id).includes(a.id)
+		)
+		window.localStorage.setItem(
+			"artistsToFollow",
+			JSON.stringify(artistsToFollow)
+		)
+	}
 
 	async function loadArtistsToFollow(): Promise<ArtistWithSavedTracks[]> {
-		let artistsToFollow: Array<ArtistWithSavedTracks> = []
 		const localStorageArtistsToFollow =
 			window.localStorage.getItem("artistsToFollow")
 		if (localStorageArtistsToFollow !== null) {
@@ -72,13 +85,15 @@
 				JSON.stringify(artistsToFollow)
 			)
 		}
-		artistsToFollow = artistsToFollow.sort((a) => a.savedTracks.length)
 
 		return artistsToFollow
 	}
+
 </script>
 
-<Heading action="follow all">Maybe follow those artists?</Heading>
+<Heading action="follow all" on:action={(_) => follow(...artistsToFollow)}
+	>Maybe follow those artists?</Heading
+>
 
 <!-- TODO reload button -->
 
@@ -90,9 +105,9 @@
 				: 0}
 		/>
 	</div>
-{:then artists}
-	{#each artists as artist}
-		<ArtistToFollow {artist} />
+{:then}
+	{#each artistsToFollow as artist}
+		<ArtistToFollow {artist} on:follow={(_) => follow(artist)} />
 	{/each}
 {:catch error}
 	Sorry. {error.message}.
