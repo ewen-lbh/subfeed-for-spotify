@@ -12,7 +12,6 @@
 		window.localStorage.clear()
 		window.location.reload()
 	}
-
 </script>
 
 <nav>
@@ -45,5 +44,4 @@
 	button:not(.current) {
 		font-style: italic;
 	}
-
 </style>

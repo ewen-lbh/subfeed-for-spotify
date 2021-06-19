@@ -14,13 +14,13 @@ export let spotify: Readable<AxiosInstance> = derived(tokens, (tokens, set) => {
 		},
 	})
 	instance.interceptors.response.use(
-		(response) => response,
-		async (error) => {
+		response => response,
+		async error => {
 			if (error.response.status === 429) {
 				console.log(error.response)
 				let cooldown = parseInt(error.response.headers["retry-after"]) + 0.25
 				console.info(`Cooling down: waiting for ${cooldown} seconds`)
-				await new Promise((r) => setTimeout(r, cooldown * 1000))
+				await new Promise(r => setTimeout(r, cooldown * 1000))
 				return axios(error.response.config)
 			} else if (error.response.status === 401) {
 				let newTokens = await refreshToken(tokens)
