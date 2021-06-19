@@ -27,6 +27,7 @@
 			const url = await makeAuthorizationRequestURL(codeVerifier, [
 				"user-library-read",
 				"user-follow-read",
+				"user-follow-modify",
 				"user-modify-playback-state",
 			])
 			console.log(`requesting auth thru ${url}`)
