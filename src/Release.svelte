@@ -2,8 +2,35 @@
 	import { followedArtists, spotify } from "./stores"
 	import type { Album, SimplifiedAlbum, SimplifiedTrack } from "./types"
 	import { intersection } from "./utils"
+	import { onMount } from "svelte"
 
 	export let release: SimplifiedAlbum
+
+	let colors  = {
+		darkMuted: "",
+		vibrant: ""
+	}
+
+	onMount(() => {
+		extractColors()
+	})
+
+	async function extractColors() {
+		const smallestImage = 
+			release.images.find(
+				(i) =>
+					i.height ===
+					Math.min(...release.images.map((i) => i.height || Infinity))
+			)
+		if (smallestImage?.url !== null && smallestImage !== undefined) {
+			const extractor = Vibrant.from(smallestImage.url)
+			const swatches = await extractor.getSwatches()
+			colors = {
+				darkMuted: swatches.DarkMuted?.getHex() || "",
+				vibrant: swatches.Vibrant?.getHex() || "",
+			}
+		}
+	}
 
 	async function getReleaseTracks(): Promise<SimplifiedTrack[]> {
 		const fullRelease: Album = (await $spotify.get(release.href)).data
@@ -20,7 +47,7 @@
 	}
 </script>
 
-<div class="split">
+<div class="split" style="--dark-muted:{colors.darkMuted};--vibrant:{colors.vibrant}">
 	<a href={release.external_urls.spotify}>
 		<img
 			src={release.images[0].url}
@@ -102,4 +129,9 @@
 	[data-interesting="false"] {
 		opacity: 0.5;
 	}
+
+	li::marker {
+		color: var(--vibrant);
+	}
+
 </style>
