@@ -29,6 +29,9 @@ export interface SimplifiedArtist {
 	uri: string
 	href: string
 	id: string
+	external_urls: {
+		spotify: string
+	}
 }
 
 export interface SimplifiedAlbum {
@@ -48,6 +51,9 @@ export interface SimplifiedAlbum {
 	total_tracks: number
 	type: "album"
 	uri: string
+	external_urls: {
+		spotify: string
+	}
 }
 
 export interface SimplifiedTrack {
@@ -65,6 +71,9 @@ export interface SimplifiedTrack {
 	track_number: number
 	type: "track"
 	uri: string
+	external_urls: {
+		spotify: string
+	}
 }
 
 export interface Track extends SimplifiedTrack {

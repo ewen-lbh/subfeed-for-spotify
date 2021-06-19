@@ -21,14 +21,23 @@
 </script>
 
 <div class="split">
-	<img
-		src={release.images[0].url}
-		alt="Cover art of {release.name}"
-		class="cover"
-	/>
+	<a href={release.external_urls.spotify}>
+		<img
+			src={release.images[0].url}
+			alt="Cover art of {release.name}"
+			class="cover"
+		/>
+	</a>
 	<div class="content">
-		<h2>{release.artists.map((a) => a.name).join(", ")}</h2>
-		<h3>{release.name}</h3>
+		<h2>
+			{#each release.artists as artist, idx}
+				<a href={artist.external_urls.spotify}>{artist.name}</a>{idx !==
+				release.artists.length - 1
+					? ", "
+					: ""}
+			{/each}
+		</h2>
+		<a href={release.external_urls.spotify}><h3>{release.name}</h3></a>
 
 		{#if release.album_type === "compilation"}
 			<table>

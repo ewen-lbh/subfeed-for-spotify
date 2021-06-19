@@ -6,8 +6,12 @@
 </script>
 
 <img src={artist.images[0].url} alt="{artist.name}'s profile picture" />
+<a href={artist.external_urls.spotify}>
+	<img src={artist.images[0].url} alt="{artist.name}'s profile picture" />
 
 <!-- TODO button to follow -->
+	<p class="nam">{artist.name}</p>
+</a>
 
 <p class="why">
 	you liked {artist.savedTracks.length} track{artist.savedTracks.length > 1
