@@ -1,4 +1,6 @@
 {
 	"semi": false,
-	"singleQuote": false
+	"singleQuote": false,
+	"arrowParens": "avoid",
+	"pluginSearchDirs": ["."]
 }

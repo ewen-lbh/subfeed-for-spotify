@@ -8,7 +8,7 @@
 		"start": "sirv public --no-clear",
 		"validate": "svelte-check",
 		"upload": "surge public spotifydash.surge.sh",
-		"format": "prettier --plugin-search-dir=. --write ."
+		"format": "prettier --write ."
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^17.1.0",
