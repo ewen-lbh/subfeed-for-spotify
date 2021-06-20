@@ -132,9 +132,17 @@ export function readTokensFromLocalStorage(): Tokens {
 }
 
 export async function refreshToken(tokens: Tokens): Promise<Tokens> {
-	return await axios.post("https://accounts.spotify.com/api/token", {
-		grant_type: "refresh_token",
-		refresh_token: tokens.refresh,
-		client_id: CLIENT_ID,
-	})
+	let data = new URLSearchParams()
+	data.append("grant_type", "refresh_token")
+	data.append("refresh_token", tokens.refresh)
+	data.append("client_id", CLIENT_ID)
+	return await axios.post(
+		"https://accounts.spotify.com/api/token",
+		data,
+		{
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		}
+	)
 }
