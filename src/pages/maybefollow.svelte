@@ -20,6 +20,7 @@
 
 	$: artistsToFollow.sort((a, b) => -(a.savedTracks.length - b.savedTracks.length ))
 
+	// FIXME only works for ≤ 50 artists
 	async function follow(...artists: SimplifiedArtist[]) {
 		await $spotify.put(
 			`me/following?type=artist&ids=${artists.map((a) => a.id).join(",")}`
