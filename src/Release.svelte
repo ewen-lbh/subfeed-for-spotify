@@ -3,6 +3,8 @@
 	import type { Album, SimplifiedAlbum, SimplifiedTrack } from "./types"
 	import { intersection } from "./utils"
 	import { onMount } from "svelte"
+	import Icon from "./Icon.svelte"
+	import ToggleLiked from "./ToggleLiked.svelte"
 
 	export let release: SimplifiedAlbum
 
@@ -14,6 +16,8 @@
 	onMount(() => {
 		extractColors()
 	})
+
+	let releaseTracks: SimplifiedTrack[] = []
 
 	async function extractColors() {
 		const smallestImage = 
@@ -32,9 +36,19 @@
 		}
 	}
 
-	async function getReleaseTracks(): Promise<SimplifiedTrack[]> {
+	async function getReleaseTracks() {
 		const fullRelease: Album = (await $spotify.get(release.href)).data
-		return fullRelease.tracks.items
+		const savedStatuses: boolean[] = (
+			await $spotify.get(
+				`me/tracks/contains?ids=${fullRelease.tracks.items
+					.map(t => t.id)
+					.join(",")}`
+			)
+		).data
+		for (const [i, _] of fullRelease.tracks.items.entries()) {
+			fullRelease.tracks.items[i].is_saved = savedStatuses[i] || false
+		}
+		releaseTracks = fullRelease.tracks.items
 	}
 
 	async function playTrack(index: number) {
@@ -45,6 +59,7 @@
 			},
 		})
 	}
+
 </script>
 
 <div class="split" style="--dark-muted:{colors.darkMuted};--vibrant:{colors.vibrant}">
@@ -70,8 +85,8 @@
 			<table>
 				{#await getReleaseTracks()}
 					<tr>Loading tracks...</tr>
-				{:then tracks}
-					{#each tracks as track, index}
+				{:then}
+					{#each releaseTracks as track, index}
 						<tr
 							data-interesting={intersection(
 								track.artists.map((a) => a.id),
@@ -91,8 +106,8 @@
 			<ol>
 				{#await getReleaseTracks()}
 					<li>Loading tracks...</li>
-				{:then tracks}
-					{#each tracks as track, index}
+				{:then}
+					{#each releaseTracks as track, index}
 						<li
 							value={track.track_number}
 							data-interesting={intersection(
@@ -112,6 +127,13 @@
 										.join(", ")}</span
 								>
 							{/if}
+							<ToggleLiked
+								{track}
+								on:toggle={({ detail: { id, saved } }) =>
+									(releaseTracks[
+										releaseTracks.findIndex(t => t.id === id)
+									].is_saved = saved)}
+							/>
 						</li>
 					{/each}
 					{#if release.total_tracks > 50}

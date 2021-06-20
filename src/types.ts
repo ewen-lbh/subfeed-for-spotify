@@ -74,6 +74,7 @@ export interface SimplifiedTrack {
 	external_urls: {
 		spotify: string
 	}
+	is_saved?: boolean
 }
 
 export interface Track extends SimplifiedTrack {
