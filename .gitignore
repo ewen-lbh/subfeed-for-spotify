@@ -133,3 +133,5 @@ temp/
 # Environment variables
 .env
 public/build
+
+commit-types-distribution.png
