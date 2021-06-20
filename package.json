@@ -8,6 +8,7 @@
 		"start": "sirv public --no-clear",
 		"validate": "svelte-check",
 		"upload": "surge public spotifydash.surge.sh",
+		"update": "pnpm build && pnpm upload",
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
