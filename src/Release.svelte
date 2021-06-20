@@ -8,9 +8,9 @@
 
 	export let release: SimplifiedAlbum
 
-	let colors  = {
+	let colors = {
 		darkMuted: "",
-		vibrant: ""
+		vibrant: "",
 	}
 
 	onMount(() => {
@@ -20,12 +20,10 @@
 	let releaseTracks: SimplifiedTrack[] = []
 
 	async function extractColors() {
-		const smallestImage = 
-			release.images.find(
-				(i) =>
-					i.height ===
-					Math.min(...release.images.map((i) => i.height || Infinity))
-			)
+		const smallestImage = release.images.find(
+			i =>
+				i.height === Math.min(...release.images.map(i => i.height || Infinity))
+		)
 		if (smallestImage?.url !== null && smallestImage !== undefined) {
 			const extractor = Vibrant.from(smallestImage.url)
 			const swatches = await extractor.getSwatches()
@@ -62,7 +60,10 @@
 
 </script>
 
-<div class="split" style="--dark-muted:{colors.darkMuted};--vibrant:{colors.vibrant}">
+<div
+	class="split"
+	style="--dark-muted:{colors.darkMuted};--vibrant:{colors.vibrant}"
+>
 	<a href={release.external_urls.spotify}>
 		<img
 			src={release.images[0].url}
@@ -89,13 +90,13 @@
 					{#each releaseTracks as track, index}
 						<tr
 							data-interesting={intersection(
-								track.artists.map((a) => a.id),
-								$followedArtists.map((a) => a.id)
+								track.artists.map(a => a.id),
+								$followedArtists.map(a => a.id)
 							).length > 0}
-							on:click={(e) => playTrack(index)}
+							on:click={e => playTrack(index)}
 						>
 							<td class="artists"
-								>{track.artists.map((a) => a.name).join(", ")}</td
+								>{track.artists.map(a => a.name).join(", ")}</td
 							>
 							<td class="name">{track.name}</td>
 						</tr>
@@ -110,20 +111,21 @@
 					{#each releaseTracks as track, index}
 						<li
 							value={track.track_number}
+							id={track.id}
 							data-interesting={intersection(
-								track.artists.map((a) => a.id),
-								$followedArtists.map((a) => a.id)
+								track.artists.map(a => a.id),
+								$followedArtists.map(a => a.id)
 							).length > 0}
-							on:click={(e) => playTrack(index)}
+							on:click={e => playTrack(index)}
 						>
 							{track.name}
-							{#if track.artists.filter((a) => !release.artists
-										.map((a) => a.id)
+							{#if track.artists.filter(a => !release.artists
+										.map(a => a.id)
 										.includes(a.id)).length > 1}
 								<span class="featuring"
 									>&mdash; with {track.artists
-										.filter((a) => a.name != release.artists[0].name)
-										.map((a) => a.name)
+										.filter(a => a.name != release.artists[0].name)
+										.map(a => a.name)
 										.join(", ")}</span
 								>
 							{/if}

@@ -3,7 +3,6 @@
 
 	export let mainArtist: Artist
 	export let track: Track
-
 </script>
 
 <!-- TODO button to play track (in the artist context?) -->
@@ -14,9 +13,9 @@
 		<a href={track.external_urls.spotify}>{track.name}</a>
 		{#if track.artists.length > 1}
 			<span class="featuring"
-				>— with {#each track.artists.filter((a) => a.id != mainArtist.id) as artist, idx}
+				>— with {#each track.artists.filter(a => a.id != mainArtist.id) as artist, idx}
 					<a href={artist.external_urls.spotify}>{artist.name}</a>{idx !==
-					track.artists.filter((a) => a.id != mainArtist.id).length - 1
+					track.artists.filter(a => a.id != mainArtist.id).length - 1
 						? ", "
 						: ""}
 				{/each}

@@ -38,7 +38,7 @@
 			loadedArtists++
 		}
 		releases = releases
-			.filter((r) => r.available_markets.includes("FR"))
+			.filter(r => r.available_markets.includes("FR"))
 			.sort((a, b) =>
 				a.release_date === b.release_date
 					? a.id > b.id
@@ -52,6 +52,7 @@
 			.slice(0, 25)
 		return releases
 	}
+
 </script>
 
 <Heading action="play all">New stuff for you</Heading>
