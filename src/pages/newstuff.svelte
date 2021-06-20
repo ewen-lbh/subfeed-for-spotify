@@ -39,7 +39,15 @@
 		}
 		releases = releases
 			.filter((r) => r.available_markets.includes("FR"))
-			.sort((a, b) => (a.release_date > b.release_date ? 1 : -1))
+			.sort((a, b) =>
+				a.release_date === b.release_date
+					? a.id > b.id
+						? 1
+						: -1
+					: a.release_date > b.release_date
+					? 1
+					: -1
+			)
 			.reverse()
 			.slice(0, 25)
 		return releases
