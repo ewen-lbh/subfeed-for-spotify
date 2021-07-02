@@ -77,3 +77,13 @@
 {:catch error}
 	<div class="centered">Sorry. {error.message}</div>
 {/await}
+
+<style>
+	li {
+		margin-bottom: 4em;
+	}
+	ol {
+		list-style: none;
+		padding-left: 0;
+	}
+</style>

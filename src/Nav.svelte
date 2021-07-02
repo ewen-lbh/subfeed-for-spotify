@@ -20,8 +20,8 @@
 		class:current={current === "newstuff"}
 		{disabled}
 	>
-		newstuff <button on:click={(_) => dispatch("play-all-newstuff")}
-			><Icon name="play" /></button
+		newstuff <button class="play-button" on:click={(_) => dispatch("play-all-newstuff")}
+			><Icon name="play" outlined /></button
 		>
 	</button>
 	<!-- <button
@@ -38,10 +38,39 @@
 </nav>
 
 <style>
+	nav {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+	}
+	button {
+		background: transparent;
+		border: none;
+		font-family: IBM Plex Mono, monospace;
+		font-size: 1.25em;
+		display: flex;
+		align-items: center;
+	}
+	button:hover {
+		cursor: pointer;
+		font-style: normal;
+	}
+	.play-button {
+		background-color: var(--primary);
+		height: 1.5em;
+		width: 1.5em;
+		margin-left: 0.5em;
+		display: flex;
+		align-items: center;
+		margin-bottom: 0;
+	}
 	button.current {
 		font-weight: 700;
 	}
 	button:not(.current) {
 		font-style: italic;
+	}
+	button:not(.current).play-button {
+		font-style: normal;
 	}
 </style>

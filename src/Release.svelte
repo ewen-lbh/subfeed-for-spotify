@@ -1,10 +1,16 @@
 <script lang="ts">
 	import { followedArtists, spotify } from "./stores"
-	import type { Album, SimplifiedAlbum, SimplifiedTrack } from "./types"
+	import type {
+		Album,
+		SimplifiedAlbum,
+		SimplifiedArtist,
+		SimplifiedTrack,
+	} from "./types"
 	import { intersection } from "./utils"
 	import { onMount } from "svelte"
-	import Icon from "./Icon.svelte"
 	import ToggleLiked from "./ToggleLiked.svelte"
+	import ArtistToFollow from "./ArtistToFollow.svelte"
+	import Icon from "./Icon.svelte"
 
 	export let release: SimplifiedAlbum
 
@@ -18,6 +24,25 @@
 	})
 
 	let releaseTracks: SimplifiedTrack[] = []
+	let hoveredTrack: number | null = null
+
+	function followedArtistsIn(
+		trackArtists: SimplifiedArtist[]
+	): SimplifiedArtist[] {
+		const ids = intersection(
+			$followedArtists.map(a => a.id),
+			trackArtists.map(a => a.id)
+		)
+		return ids.map(id => trackArtists.find(a => a.id === id))
+	}
+
+	function featuredArtists(
+		trackArtists: SimplifiedArtist[]
+	): SimplifiedArtist[] {
+		return trackArtists.filter(
+			artist => !release.artists.map(a => a.id).includes(artist.id)
+		)
+	}
 
 	async function extractColors() {
 		const smallestImage = release.images.find(
@@ -29,7 +54,10 @@
 			const swatches = await extractor.getSwatches()
 			colors = {
 				darkMuted: swatches.DarkMuted?.getHex() || "",
-				vibrant: swatches.Vibrant?.getHex() || "",
+				vibrant:
+					swatches.Vibrant?.getHsl()[1] >= 0.1
+						? swatches.Vibrant?.getHex() || ""
+						: "var(--primary)",
 			}
 		}
 	}
@@ -57,11 +85,10 @@
 			},
 		})
 	}
-
 </script>
 
 <div
-	class="split"
+	class="card"
 	style="--dark-muted:{colors.darkMuted};--vibrant:{colors.vibrant}"
 >
 	<a href={release.external_urls.spotify}>
@@ -72,7 +99,7 @@
 		/>
 	</a>
 	<div class="content">
-		<h2>
+		<h2 class="artist">
 			{#each release.artists as artist, idx}
 				<a href={artist.external_urls.spotify}>{artist.name}</a>{idx !==
 				release.artists.length - 1
@@ -80,21 +107,23 @@
 					: ""}
 			{/each}
 		</h2>
-		<a href={release.external_urls.spotify}><h3>{release.name}</h3></a>
+		<a href={release.external_urls.spotify}
+			><h3 class="title">{release.name}</h3></a
+		>
 
-		{#if release.album_type === "compilation"}
-			<table>
+		{#if release.album_type === "compilation" || release.artists[0].name === "Various Artists"}
+			<table class="tracklist">
 				{#await getReleaseTracks()}
 					<tr>Loading tracks...</tr>
 				{:then}
 					{#each releaseTracks as track, index}
 						<tr
-							data-interesting={intersection(
-								track.artists.map(a => a.id),
-								$followedArtists.map(a => a.id)
-							).length > 0}
+							data-interesting={followedArtistsIn(track.artists).length > 0}
 							on:click={e => playTrack(index)}
 						>
+							<td class="play-icon">
+								<Icon name="play" />
+							</td>
 							<td class="artists"
 								>{track.artists.map(a => a.name).join(", ")}</td
 							>
@@ -104,7 +133,7 @@
 				{/await}
 			</table>
 		{:else}
-			<ol>
+			<ol class="tracklist">
 				{#await getReleaseTracks()}
 					<li>Loading tracks...</li>
 				{:then}
@@ -112,25 +141,22 @@
 						<li
 							value={track.track_number}
 							id={track.id}
-							data-interesting={intersection(
-								track.artists.map(a => a.id),
-								$followedArtists.map(a => a.id)
-							).length > 0}
+							data-interesting={followedArtistsIn(track.artists).length > 0}
 							on:click={e => playTrack(index)}
+							on:mouseover={e => (hoveredTrack = index)}
+							on:mouseout={e => (hoveredTrack = null)}
 						>
 							{track.name}
-							{#if track.artists.filter(a => !release.artists
-										.map(a => a.id)
-										.includes(a.id)).length > 1}
+							{#if featuredArtists(track.artists).length > 0}
 								<span class="featuring"
-									>&mdash; with {track.artists
-										.filter(a => a.name != release.artists[0].name)
+									>&mdash; with {featuredArtists(track.artists)
 										.map(a => a.name)
 										.join(", ")}</span
 								>
 							{/if}
 							<ToggleLiked
 								{track}
+								showLikeButton={hoveredTrack === index || track.is_saved}
 								on:toggle={({ detail: { id, saved } }) =>
 									(releaseTracks[
 										releaseTracks.findIndex(t => t.id === id)
@@ -145,7 +171,7 @@
 			</ol>
 		{/if}
 
-		<em class="release_date">Released {release.release_date}</em>
+		<em class="release-date">released {release.release_date}</em>
 	</div>
 </div>
 
@@ -154,8 +180,91 @@
 		opacity: 0.5;
 	}
 
-	li::marker {
+	li::marker,
+	.title {
 		color: var(--vibrant);
 	}
 
+	li:hover,
+	tr:hover {
+		cursor: pointer;
+	}
+
+	li:hover::marker {
+		content: " ";
+		font-family: "Material Icons Outlined";
+	}
+	tr:hover td.play-icon {
+		opacity: 1;
+	}
+
+	tr td.play-icon {
+		opacity: 0;
+	}
+
+	li, tr {
+		margin-bottom: 0.5em;
+	}
+
+	.card {
+		display: grid;
+		grid-template-columns: 300px 1fr;
+		background: #151515;
+		color: white;
+	}
+
+	.cover {
+		width: 300px;
+		height: 300px;
+		object-fit: cover;
+	}
+
+	.content {
+		padding: 1.5em;
+		display: flex;
+		flex-direction: column;
+		min-height: calc(300px - 2 * 1.5em);
+	}
+
+	.tracklist,
+	.title {
+		font-family: IBM Plex Mono, monospace;
+		margin-top: 0;
+	}
+
+	.tracklist tr:hover,
+	.tracklist li:hover {
+		color: var(--vibrant);
+	}
+
+	.title {
+		font-size: 1.25em;
+		font-weight: normal;
+	}
+
+	.featuring {
+		opacity: 0.5;
+	}
+
+	.artist {
+		font-family: DM Serif Display, serif;
+		margin-top: 0;
+		margin-bottom: 0;
+		font-size: 1.5em;
+	}
+
+	.artist a {
+		color: white;
+		font-size: 1.5em;
+	}
+
+	.release-date {
+		justify-self: flex-end;
+		align-self: flex-end;
+		display: block;
+		margin-top: auto;
+		font-family: IBM Plex Mono, monospace;
+		font-weight: normal;
+		opacity: 0.5;
+	}
 </style>

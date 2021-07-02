@@ -10,19 +10,21 @@
 </script>
 
 <Logo />
-<Nav {current} on:navigate={(e) => (current = e.detail)} />
+<Nav {current} on:navigate={e => (current = e.detail)} />
 
-{#if $tokens.access === ""}
-	<Login />
-{:else if current == "newstuff"}
-	<Newstuff />
-	<!-- {:else if current == "checkitout"}
+<main>
+	{#if $tokens.access === ""}
+		<Login />
+	{:else if current == "newstuff"}
+		<Newstuff />
+		<!-- {:else if current == "checkitout"}
 	<Checkitout /> -->
-{:else if current == "maybefollow"}
-	<Maybefollow />
-{:else}
-	<h1>404</h1>
-{/if}
+	{:else if current == "maybefollow"}
+		<Maybefollow />
+	{:else}
+		<h1>404</h1>
+	{/if}
+</main>
 
 <footer>
 	Data from <br />
@@ -36,7 +38,11 @@
 <style>
 	footer {
 		margin: 0 auto;
-		height: 100vh;
 		text-align: center;
+	}
+
+	main {
+		max-width: 1000px;
+		margin: 0 auto;
 	}
 </style>

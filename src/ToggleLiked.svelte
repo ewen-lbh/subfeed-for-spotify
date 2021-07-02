@@ -8,6 +8,7 @@
 	const dispatch = createEventDispatcher()
 
 	export let track: SimplifiedTrack
+	export let showLikeButton: boolean
 
 	// FIXME only works for ≤ 50 tracks
 	async function toggleLiked(...tracks: SimplifiedTrack[]) {
@@ -36,6 +37,23 @@
 
 <button
 	title="Like this track"
+	class="like" class:shown={showLikeButton}
 	on:click|stopPropagation={_ => toggleLiked(track)}
 	><Icon name="heart" outlined={!isAlreadyLiked(track)} /></button
 >
+
+<style>
+	button {
+		background: transparent;
+		border: none;
+		color: transparent;
+		margin-bottom: 0;
+		padding: 0;
+	}
+	button.shown {
+		color: inherit;
+	}
+	button.shown:hover {
+		cursor: pointer;
+	}
+</style>
