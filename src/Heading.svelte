@@ -8,7 +8,7 @@
 <h1>
 	<slot />
 	{#if action}
-		<button on:click={(e) => dispatch("action")}>{@html action}</button>
+		<button on:click={e => dispatch("action")}>{@html action}</button>
 	{/if}
 </h1>
 
@@ -17,7 +17,7 @@
 		font-family: Rubik Mono One, sans-serif;
 		font-weight: normal;
 	}
-	
+
 	button {
 		font-family: DM Serif Display, serif;
 		color: var(--primary);

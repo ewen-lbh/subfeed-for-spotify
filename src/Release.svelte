@@ -202,7 +202,8 @@
 		opacity: 0;
 	}
 
-	li, tr {
+	li,
+	tr {
 		margin-bottom: 0.5em;
 	}
 

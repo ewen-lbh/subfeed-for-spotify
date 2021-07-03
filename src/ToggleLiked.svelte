@@ -32,12 +32,12 @@
 	function isAlreadyLiked(track: SimplifiedTrack): boolean {
 		return track?.is_saved || false
 	}
-
 </script>
 
 <button
 	title="Like this track"
-	class="like" class:shown={showLikeButton}
+	class="like"
+	class:shown={showLikeButton}
 	on:click|stopPropagation={_ => toggleLiked(track)}
 	><Icon name="heart" outlined={!isAlreadyLiked(track)} /></button
 >

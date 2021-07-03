@@ -6,7 +6,7 @@
 
 	export let current: string
 	let disabled: boolean
-	spotify.subscribe((client) => (disabled = client === null))
+	spotify.subscribe(client => (disabled = client === null))
 
 	const logout = (_: any) => {
 		window.localStorage.clear()
@@ -16,11 +16,13 @@
 
 <nav>
 	<button
-		on:click={(_) => dispatch("navigate", "newstuff")}
+		on:click={_ => dispatch("navigate", "newstuff")}
 		class:current={current === "newstuff"}
 		{disabled}
 	>
-		newstuff <button class="play-button" on:click={(_) => dispatch("play-all-newstuff")}
+		newstuff <button
+			class="play-button"
+			on:click={_ => dispatch("play-all-newstuff")}
 			><Icon name="play" outlined /></button
 		>
 	</button>
@@ -30,7 +32,7 @@
 		{disabled}>checkitout</button
 	> -->
 	<button
-		on:click={(e) => dispatch("navigate", "maybefollow")}
+		on:click={e => dispatch("navigate", "maybefollow")}
 		class:current={current == "maybefollow"}
 		{disabled}>maybefollow</button
 	>

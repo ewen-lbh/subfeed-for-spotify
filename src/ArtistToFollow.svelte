@@ -5,7 +5,6 @@
 	const dispatch = createEventDispatcher()
 
 	export let artist: ArtistWithSavedTracks
-
 </script>
 
 <a href={artist.external_urls.spotify}>
@@ -14,7 +13,7 @@
 	<p class="nam">{artist.name}</p>
 </a>
 
-<button on:click={(_) => dispatch("follow")}>Follow</button>
+<button on:click={_ => dispatch("follow")}>Follow</button>
 <!-- TODO: ignore/dismiss button. implies storing a "ignored list" somewhere, and letting the user reset/edit that list. -->
 
 <p class="why">

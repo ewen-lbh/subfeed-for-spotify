@@ -52,21 +52,23 @@
 			.slice(0, 25)
 		return releases
 	}
-
 </script>
 
 <Heading action="play all">New stuff for you</Heading>
 
-
 {#await getReleases()}
-<div class="centered">
+	<div class="centered">
 		<ProgressBar
-			series={{perc: totalArtists !== 0
-				? Math.round((loadedArtists / totalArtists) * 100)
-				: 0, color: "#53ffa5"}}
+			series={{
+				perc:
+					totalArtists !== 0
+						? Math.round((loadedArtists / totalArtists) * 100)
+						: 0,
+				color: "#53ffa5",
+			}}
 		/>
 		<p>Loading...</p>
-</div>
+	</div>
 {:then releases}
 	<ol>
 		{#each releases as release}

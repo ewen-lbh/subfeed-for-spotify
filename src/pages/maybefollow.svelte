@@ -18,15 +18,17 @@
 	let totalSavedTracks = 0
 	let artistsToFollow: ArtistWithSavedTracks[] = []
 
-	$: artistsToFollow.sort((a, b) => -(a.savedTracks.length - b.savedTracks.length ))
+	$: artistsToFollow.sort(
+		(a, b) => -(a.savedTracks.length - b.savedTracks.length)
+	)
 
 	// FIXME only works for ≤ 50 artists
 	async function follow(...artists: SimplifiedArtist[]) {
 		await $spotify.put(
-			`me/following?type=artist&ids=${artists.map((a) => a.id).join(",")}`
+			`me/following?type=artist&ids=${artists.map(a => a.id).join(",")}`
 		)
 		artistsToFollow = artistsToFollow.filter(
-			(a) => !artists.map((a) => a.id).includes(a.id)
+			a => !artists.map(a => a.id).includes(a.id)
 		)
 		window.localStorage.setItem(
 			"artistsToFollow",
@@ -63,10 +65,10 @@
 
 			for (const entry of $library) {
 				for (const artist of entry.track.artists) {
-					if (!$followedArtists.map((a) => a.id).includes(artist.id)) {
-						if (artistsSavedTracks.map((a) => a.id).includes(artist.id)) {
+					if (!$followedArtists.map(a => a.id).includes(artist.id)) {
+						if (artistsSavedTracks.map(a => a.id).includes(artist.id)) {
 							artistsSavedTracks[
-								artistsSavedTracks.map((a) => a.id).indexOf(artist.id)
+								artistsSavedTracks.map(a => a.id).indexOf(artist.id)
 							].savedTracks.push(entry)
 						} else {
 							artistsSavedTracks.push({ ...artist, savedTracks: [entry] })
@@ -91,10 +93,9 @@
 
 		return artistsToFollow
 	}
-
 </script>
 
-<Heading action="follow all" on:action={(_) => follow(...artistsToFollow)}
+<Heading action="follow all" on:action={_ => follow(...artistsToFollow)}
 	>Maybe follow those artists?</Heading
 >
 
@@ -103,14 +104,18 @@
 {#await loadArtistsToFollow()}
 	<div class="centered">
 		<ProgressBar
-			series={{perc: totalSavedTracks !== 0
-				? Math.round(($library.length / totalSavedTracks) * 100)
-				: 0, color: "#53ffa5"}}
+			series={{
+				perc:
+					totalSavedTracks !== 0
+						? Math.round(($library.length / totalSavedTracks) * 100)
+						: 0,
+				color: "#53ffa5",
+			}}
 		/>
 	</div>
 {:then}
 	{#each artistsToFollow as artist}
-		<ArtistToFollow {artist} on:follow={(_) => follow(artist)} />
+		<ArtistToFollow {artist} on:follow={_ => follow(artist)} />
 	{/each}
 {:catch error}
 	Sorry. {error.message}.
