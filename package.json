@@ -9,7 +9,7 @@
 		"validate": "svelte-check",
 		"upload": "surge public spotifydash.surge.sh",
 		"update": "pnpm build && pnpm upload",
-		"format": "prettier --write ."
+		"format": "prettier --plugin-search-dir=. --write ."
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^17.1.0",
