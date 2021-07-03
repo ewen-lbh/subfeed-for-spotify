@@ -4,14 +4,14 @@
 <style>
 	h1 {
 		font-family: Rubik Mono One, sans-serif;
-		font-size: 4em;
+		font-size: 3em;
 		color: var(--primary);
 	}
 
 	p {
 		font-family: DM Serif Display, serif;
 		font-size: 2em;
-		margin-top: -2.5em;
+		margin-top: -2.25em;
 	}
 
 	* {
