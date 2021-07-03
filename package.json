@@ -1,5 +1,5 @@
 {
-	"name": "spotifydash",
+	"name": "subfeed-for-spotify",
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
@@ -7,7 +7,7 @@
 		"dev": "rollup -c -w",
 		"start": "sirv public --no-clear",
 		"validate": "svelte-check",
-		"upload": "surge public spotifydash.surge.sh",
+		"upload": "surge public subfeed-for-spotify.surge.sh",
 		"update": "pnpm build && pnpm upload",
 		"format": "prettier --plugin-search-dir=. --write ."
 	},
@@ -44,7 +44,7 @@
 		"app",
 		"svelte"
 	],
-	"homepage": "https://github.com/ewen-lbh/spotifydash",
+	"homepage": "https://github.com/ewen-lbh/subfeed-for-spotify",
 	"license": "AGPL-3.0",
 	"author": "Ewen Le Bihan <hey@ewen.works>"
 }

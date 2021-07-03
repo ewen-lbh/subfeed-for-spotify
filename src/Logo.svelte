@@ -1,5 +1,5 @@
-<h1>spotifydash</h1>
-<p>features i wish existed</p>
+<h1>subfeed</h1>
+<p>for Spotify</p>
 
 <style>
 	h1 {

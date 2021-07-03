@@ -4,12 +4,12 @@ made with: [svelte]
 wip: yes
 ---
 
-# spotifydash
+# subfeed for Spotify
 
 :: fr
 
-[Code source](https://github.com/ewen-lbh/spotifydash)
+[Code source](https://github.com/ewen-lbh/subfeed-for-spotify)
 
 :: en
 
-[Source code](https://github.com/ewen-lbh/spotifydash)
+[Source code](https://github.com/ewen-lbh/subfeed-for-spotify)
