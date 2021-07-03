@@ -167,6 +167,8 @@
 					{#if release.total_tracks > 50}
 						<li class="more">More...</li>
 					{/if}
+				{:catch err}
+					<li class="errored">Sorry, {err.message}.</li>
 				{/await}
 			</ol>
 		{/if}
