@@ -49,7 +49,7 @@
 					: -1
 			)
 			.reverse()
-			.slice(0, 25)
+			.slice(0, 50)
 		return releases
 	}
 </script>
