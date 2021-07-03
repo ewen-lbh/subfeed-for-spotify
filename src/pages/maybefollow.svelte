@@ -114,9 +114,23 @@
 		/>
 	</div>
 {:then}
-	{#each artistsToFollow as artist}
-		<ArtistToFollow {artist} on:follow={_ => follow(artist)} />
-	{/each}
+	<ol>
+		{#each artistsToFollow as artist}
+			<li>
+				<ArtistToFollow {artist} on:follow={_ => follow(artist)} />
+			</li>
+		{/each}
+	</ol>
 {:catch error}
 	Sorry. {error.message}.
 {/await}
+
+<style>
+	ol {
+		list-style: none;
+		padding-left: 0;
+	}
+	li {
+		margin-bottom: 6em;
+	}
+</style>
