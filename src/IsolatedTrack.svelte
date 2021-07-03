@@ -1,6 +1,6 @@
 <script lang="ts">
-import Icon from "./Icon.svelte";
-import { spotify } from "./stores";
+	import Icon from "./Icon.svelte"
+	import { spotify } from "./stores"
 
 	import type { Track, Artist } from "./types"
 
@@ -11,8 +11,8 @@ import { spotify } from "./stores";
 		$spotify.put("me/player/play", {
 			context_uri: track.album.uri,
 			offset: {
-				position: track.track_number - 1
-			}
+				position: track.track_number - 1,
+			},
 		})
 	}
 </script>
@@ -20,10 +20,12 @@ import { spotify } from "./stores";
 <!-- TODO button to play track (in the artist context?) -->
 
 <div class="track">
-	<button class="play" on:click={_ => play(track)}><Icon name="play"></Icon></button>
+	<button class="play" on:click={_ => play(track)}><Icon name="play" /></button>
 	<img src={track.album.images[0].url} alt="{track.album.name}'s cover art" />
 	<p class="title">
-		<a href={track.external_urls.spotify} title={`from ${track.album.name}`}>{track.name}</a>
+		<a href={track.external_urls.spotify} title={`from ${track.album.name}`}
+			>{track.name}</a
+		>
 		{#if track.artists.length > 1}
 			<span class="featuring"
 				>— with {#each track.artists.filter(a => a.id != mainArtist.id) as artist, idx}
@@ -57,7 +59,8 @@ import { spotify } from "./stores";
 		opacity: 0;
 		background: transparent;
 	}
-	img, .play {
+	img,
+	.play {
 		width: 50px;
 		height: 50px;
 	}
