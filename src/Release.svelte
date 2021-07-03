@@ -185,6 +185,9 @@
 	li::marker,
 	.title {
 		color: var(--vibrant);
+
+	li::marker {
+		font-weight: bold;
 	}
 
 	li:hover,
@@ -206,7 +209,7 @@
 
 	li,
 	tr {
-		margin-bottom: 0.5em;
+		margin-bottom: 0.25em;
 	}
 
 	.card {
@@ -243,7 +246,7 @@
 	}
 
 	.title {
-		font-size: 1.25em;
+		font-size: 1.5em;
 		font-weight: normal;
 	}
 
@@ -254,8 +257,10 @@
 	.artist {
 		font-family: DM Serif Display, serif;
 		margin-top: 0;
-		margin-bottom: 0;
-		font-size: 1.5em;
+		margin-bottom: 0.25em;
+		font-size: 2em;
+		font-weight: normal;
+		line-height: 1;
 	}
 
 	.artist a {
