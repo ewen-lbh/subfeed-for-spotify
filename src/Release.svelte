@@ -208,22 +208,24 @@
 
 	.card {
 		display: grid;
-		grid-template-columns: 300px 1fr;
+		grid-template-columns: min(300px, 25vw) 1fr;
 		background: #151515;
 		color: white;
 	}
 
 	.cover {
-		width: 300px;
-		height: 300px;
+		width: 25vw;
+		height: 25vw;
 		object-fit: cover;
+		max-width: 300px;
+		max-height: 300px;
 	}
 
 	.content {
 		padding: 1.5em;
 		display: flex;
 		flex-direction: column;
-		min-height: calc(300px - 2 * 1.5em);
+		min-height: calc(min(300px, 25vw) - 2 * 1.5em);
 	}
 
 	.tracklist,
