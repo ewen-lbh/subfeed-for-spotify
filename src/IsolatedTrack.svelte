@@ -1,10 +1,20 @@
 <script lang="ts">
 import Icon from "./Icon.svelte";
+import { spotify } from "./stores";
 
 	import type { Track, Artist } from "./types"
 
 	export let mainArtist: Artist
 	export let track: Track
+
+	async function play(track: Track) {
+		$spotify.put("me/player/play", {
+			context_uri: track.album.uri,
+			offset: {
+				position: track.track_number - 1
+			}
+		})
+	}
 </script>
 
 <!-- TODO button to play track (in the artist context?) -->
