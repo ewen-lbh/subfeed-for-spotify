@@ -184,7 +184,9 @@
 
 	li::marker,
 	.title {
-		color: var(--vibrant);
+		color: var(--vibrant, var(--primary));
+		transition: color 2s ease;
+	}
 
 	li::marker {
 		font-weight: bold;
