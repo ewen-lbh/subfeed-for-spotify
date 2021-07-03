@@ -1,9 +1,3 @@
-------
-
-**_WARNING: This is still in construction. Though ugly and feature-wise incomplete, it works._**
-
-------
-
 # spotifydash
 
 > A dashboard with some spotify features I wish the official client had
