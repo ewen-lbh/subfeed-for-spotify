@@ -103,9 +103,9 @@
 {#await loadArtistsToFollow()}
 	<div class="centered">
 		<ProgressBar
-			series={totalSavedTracks !== 0
+			series={{perc: totalSavedTracks !== 0
 				? Math.round(($library.length / totalSavedTracks) * 100)
-				: 0}
+				: 0, color: "#53ffa5"}}
 		/>
 	</div>
 {:then}

@@ -57,15 +57,16 @@
 
 <Heading action="play all">New stuff for you</Heading>
 
+
 {#await getReleases()}
-	<div class="centerd">
+<div class="centered">
 		<ProgressBar
-			series={totalArtists !== 0
+			series={{perc: totalArtists !== 0
 				? Math.round((loadedArtists / totalArtists) * 100)
-				: 0}
+				: 0, color: "#53ffa5"}}
 		/>
 		<p>Loading...</p>
-	</div>
+</div>
 {:then releases}
 	<ol>
 		{#each releases as release}
@@ -75,7 +76,7 @@
 		{/each}
 	</ol>
 {:catch error}
-	<div class="centered">Sorry. {error.message}</div>
+	<p>Sorry. {error.message}</p>
 {/await}
 
 <style>
@@ -85,5 +86,12 @@
 	ol {
 		list-style: none;
 		padding-left: 0;
+	}
+	.centered {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
 	}
 </style>
