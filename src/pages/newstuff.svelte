@@ -32,11 +32,18 @@
 
 		let releases: SimplifiedAlbum[] = []
 		for (const artist of artists) {
-			releases.push(
-				...(await $spotify.get(`artists/${artist.id}/albums`)).data?.items
-			)
+			let paginatedReleases: CursorPaginated<SimplifiedAlbum> = (
+				await $spotify.get(`artists/${artist.id}/albums?limit=50&include_groups=album,single`)
+			).data
+			releases.push(...paginatedReleases.items)
+			while (paginatedReleases.next !== null) {
+				let response = await $spotify.get(paginatedReleases.next)
+				paginatedReleases = response.data
+				releases.push(...paginatedReleases.items)
+			}
 			loadedArtists++
 		}
+		console.log(releases)
 		releases = releases
 			.filter(r => r.available_markets.includes("FR"))
 			.sort((a, b) =>
@@ -75,6 +82,8 @@
 			<li id={release.id}>
 				<Release {release} />
 			</li>
+		{:else}
+			<li>Nothing here.</li>
 		{/each}
 	</ol>
 {:catch error}
