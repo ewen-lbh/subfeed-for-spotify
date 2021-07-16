@@ -122,7 +122,8 @@
 		{/each}
 	</ol>
 {:catch error}
-	Sorry. {error.message}. Try reloading the page or logging out and logging back in.
+	Sorry. {error.message}. Try reloading the page or logging out and logging back
+	in.
 {/await}
 
 <style>

@@ -33,7 +33,9 @@
 		let releases: SimplifiedAlbum[] = []
 		for (const artist of artists) {
 			let paginatedReleases: CursorPaginated<SimplifiedAlbum> = (
-				await $spotify.get(`artists/${artist.id}/albums?limit=50&include_groups=album,single`)
+				await $spotify.get(
+					`artists/${artist.id}/albums?limit=50&include_groups=album,single`
+				)
 			).data
 			releases.push(...paginatedReleases.items)
 			while (paginatedReleases.next !== null) {
@@ -87,7 +89,10 @@
 		{/each}
 	</ol>
 {:catch error}
-	<p>Sorry. {error.message}. Try reloading the page or logging out and logging back in.</p>
+	<p>
+		Sorry. {error.message}. Try reloading the page or logging out and logging
+		back in.
+	</p>
 {/await}
 
 <style>
