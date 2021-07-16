@@ -87,7 +87,7 @@
 		{/each}
 	</ol>
 {:catch error}
-	<p>Sorry. {error.message}</p>
+	<p>Sorry. {error.message}. Try reloading the page or logging out and logging back in.</p>
 {/await}
 
 <style>
