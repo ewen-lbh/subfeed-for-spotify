@@ -15,11 +15,19 @@
 
 <div class="artist-to-follow">
 	<a href={artist.external_urls.spotify}>
-		<img
-			class="artist"
-			src={artist.images[0].url}
-			alt="{artist.name}'s profile picture"
-		/>
+		{#if artist.images.length >= 1}
+			<img
+				class="artist"
+				src={artist.images[0].url}
+				alt="{artist.name}'s profile picture"
+			/>
+		{:else}
+			<img
+				class="artist missing-photo"
+				src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.istockphoto.com%2Fvectors%2Fdefault-placeholder-profile-icon-vector-id666545204%3Fk%3D6%26m%3D666545204%26s%3D170667a%26w%3D0%26h%3DUTMRjrzXvc5Dx6KoQ74hTli7dPgaYmqbSuqztYTIZjA%3D&f=1&nofb=1"
+				alt="default profile picture"
+			/>
+		{/if}
 	</a>
 	<div class="right">
 		<div class="name-area">
