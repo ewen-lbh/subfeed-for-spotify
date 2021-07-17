@@ -18,19 +18,28 @@ export let spotify: Readable<AxiosInstance> = derived(
 		instance.interceptors.response.use(
 			response => response,
 			async error => {
-				if (error.response.status === 429) {
-					console.log(error.response)
-					let cooldown = parseInt(error.response.headers["retry-after"]) + 0.25
-					console.info(`Cooling down: waiting for ${cooldown} seconds`)
-					await new Promise(r => setTimeout(r, cooldown * 1000))
-					return axios(error.response.config)
-				} else if (error.response.status === 401) {
-					let newTokens = await refreshToken(currentTokens)
-					error.response.config.headers.Authorization = `Bearer ${newTokens.access}`
-					tokens.set(newTokens)
-					return axios(error.response.config)
-				} else {
-					Promise.reject(error)
+				switch (error.response.status) {
+					case 403:
+						await new Promise(r => setTimeout(r, 500))
+						return axios(error.response.config)
+
+					case 429:
+						console.log(error.response)
+						let cooldown =
+							parseInt(error.response.headers["retry-after"]) + 0.25
+						console.info(`Cooling down: waiting for ${cooldown} seconds`)
+						await new Promise(r => setTimeout(r, cooldown * 1000))
+						return axios(error.response.config)
+
+					case 401:
+						let newTokens = await refreshToken(currentTokens)
+						error.response.config.headers.Authorization = `Bearer ${newTokens.access}`
+						tokens.set(newTokens)
+						return axios(error.response.config)
+
+					default:
+						Promise.reject(error)
+						break
 				}
 			}
 		)
