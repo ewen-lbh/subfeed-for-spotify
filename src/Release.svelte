@@ -168,7 +168,10 @@
 						<li class="more">More...</li>
 					{/if}
 				{:catch err}
-					<li class="errored">Sorry, {err.message}. <button on:click={window.location.reload}>Reload</button> </li>
+					<li class="errored">
+						Sorry, {err.message}.
+						<button on:click={window.location.reload}>Reload</button>
+					</li>
 				{/await}
 			</ol>
 		{/if}

@@ -51,7 +51,7 @@
 	@media (min-width: 1500px) {
 		:global(body) {
 			display: grid;
-			grid-template-areas: 
+			grid-template-areas:
 				"logo main"
 				"nav main"
 				"footer main";
@@ -59,8 +59,10 @@
 			grid-template-rows: 1fr 3fr 1fr;
 			align-items: start;
 		}
-	
-		:global(nav), :global(.logo), footer {
+
+		:global(nav),
+		:global(.logo),
+		footer {
 			position: fixed;
 		}
 

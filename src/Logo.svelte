@@ -1,7 +1,6 @@
 <div class="logo">
-
-<h1>subfeed</h1>
-<p>for Spotify</p>
+	<h1>subfeed</h1>
+	<p>for Spotify</p>
 </div>
 
 <style>
