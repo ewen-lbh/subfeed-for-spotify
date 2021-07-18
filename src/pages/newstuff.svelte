@@ -18,7 +18,7 @@
 			...loadedStuff,
 			...stuff.map(item => item.slice(0, 50)),
 		].filter((val, idx, arr) => arr.indexOf(val) === idx)
-		let pre: HTMLPreElement = document.getElementById("loaded-stuff")
+		let pre = document.getElementById("loaded-stuff") as HTMLPreElement
 		pre.scrollBy({
 			behavior: "smooth",
 			top: pre.scrollHeight - pre.clientHeight,

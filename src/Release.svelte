@@ -33,7 +33,9 @@
 			$followedArtists.map(a => a.id),
 			trackArtists.map(a => a.id)
 		)
-		return ids.map(id => trackArtists.find(a => a.id === id))
+		return ids.map(
+			id => trackArtists.find(a => a.id === id) as SimplifiedArtist
+		)
 	}
 
 	function featuredArtists(
@@ -156,7 +158,9 @@
 							{/if}
 							<ToggleLiked
 								{track}
-								showLikeButton={hoveredTrack === index || track.is_saved}
+								showLikeButton={hoveredTrack === index ||
+									track.is_saved ||
+									false}
 								on:toggle={({ detail: { id, saved } }) =>
 									(releaseTracks[
 										releaseTracks.findIndex(t => t.id === id)
