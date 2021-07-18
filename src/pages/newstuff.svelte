@@ -11,6 +11,19 @@
 
 	let loadedArtists = 0
 	let totalArtists = 0
+	let loadedStuff: string[] = []
+
+	function addLoadedStuff(...stuff: string[]) {
+		loadedStuff = [
+			...loadedStuff,
+			...stuff.map(item => item.slice(0, 50)),
+		].filter((val, idx, arr) => arr.indexOf(val) === idx)
+		let pre: HTMLPreElement = document.getElementById("loaded-stuff")
+		pre.scrollBy({
+			behavior: "smooth",
+			top: pre.scrollHeight - pre.clientHeight,
+		})
+	}
 
 	async function getReleases() {
 		let paginatedArtists: CursorPaginated<SimplifiedArtist> = (
@@ -26,6 +39,7 @@
 		while (paginatedArtists.next !== null) {
 			let response = await $spotify.get(paginatedArtists.next)
 			paginatedArtists = response.data.artists
+			addLoadedStuff(...paginatedArtists.items.map(a => "artist " + a.name))
 			artists.push(...paginatedArtists.items)
 		}
 		$followedArtists = artists
@@ -42,7 +56,9 @@
 				let response = await $spotify.get(paginatedReleases.next)
 				paginatedReleases = response.data
 				releases.push(...paginatedReleases.items)
+				addLoadedStuff(...paginatedReleases.items.map(r => `release ${r.name}`))
 			}
+			addLoadedStuff(`releases by ${artist.name}`)
 			loadedArtists++
 		}
 		console.log(releases)
@@ -77,6 +93,8 @@
 			}}
 		/>
 		<p>Loading...</p>
+		<pre
+			id="loaded-stuff">{loadedStuff.map(l => `Loaded ${l}`).join("\n")}</pre>
 	</div>
 {:then releases}
 	<ol>
@@ -109,5 +127,18 @@
 		justify-content: center;
 		align-items: center;
 		text-align: center;
+	}
+
+	.centered pre {
+		max-height: 50vh;
+		width: 100ch;
+		overflow-y: scroll;
+		text-align: left;
+	}
+
+	@media (min-width: 1500px) {
+		.centered pre {
+			max-height: 70vh;
+		}
 	}
 </style>
