@@ -87,8 +87,14 @@
 		})
 	}
 
-	async function enqueue(track: SimplifiedTrack) {
+	async function enqueueTrack(track: SimplifiedTrack) {
 		await $spotify.post(`me/player/queue?uri=${track.uri}`)
+	}
+
+	async function enqueueEntireRelease() {
+		for (const track of releaseTracks) {
+			await enqueueTrack(track)
+		}
 	}
 </script>
 
@@ -112,6 +118,9 @@
 					: ""}
 			{/each}
 		</h2>
+		<button id="enqueue-release" on:click={_ => enqueueEntireRelease()}
+			>Enqueue</button
+		>
 		<a href={release.external_urls.spotify}
 			><h3 class="title">{release.name}</h3></a
 		>
@@ -172,7 +181,7 @@
 							<button
 								class="enqueue"
 								title="Add to the current queue"
-								on:click|stopPropagation={_ => enqueue(track)}
+								on:click|stopPropagation={_ => enqueueTrack(track)}
 								><Icon name="enqueue" /></button
 							>
 						</li>
@@ -247,9 +256,20 @@
 
 	.content {
 		padding: 1.5em;
-		display: flex;
+		display: grid;
 		flex-direction: column;
 		min-height: calc(min(300px, 25vw) - 2 * 1.5em);
+		grid-template-areas:
+			"artist   enqueue"
+			"title    title"
+			"tracks   tracks"
+			"released released";
+		grid-template-columns: 3fr 1fr;
+		gap: 1.5em;
+	}
+
+	.tracklist {
+		grid-area: tracks;
 	}
 
 	.tracklist,
@@ -266,6 +286,7 @@
 	.title {
 		font-size: 1.5em;
 		font-weight: normal;
+		grid-area: title;
 	}
 
 	.featuring {
@@ -279,6 +300,7 @@
 		font-size: 2em;
 		font-weight: normal;
 		line-height: 1;
+		grid-area: artist;
 	}
 
 	.artist a {
@@ -294,6 +316,7 @@
 		font-family: IBM Plex Mono, monospace;
 		font-weight: normal;
 		opacity: 0.5;
+		grid-area: released;
 	}
 
 	button.enqueue {
@@ -307,6 +330,23 @@
 		line-height: 1;
 		font-size: 1.2em;
 	}
+
+	button#enqueue-release {
+		background: transparent;
+		border: 2px solid white;
+		font-family: IBM Plex Mono, monospace;
+		border-radius: 0;
+		color: white;
+		cursor: pointer;
+		display: inline-block;
+		grid-area: enqueue;
+	}
+
+	button#enqueue-release:hover {
+		background: white;
+		color: black;
+	}
+
 	.tracklist li:hover button.enqueue {
 		opacity: 1;
 		color: var(--vibrant);
