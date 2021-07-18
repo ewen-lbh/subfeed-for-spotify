@@ -39,10 +39,42 @@
 	footer {
 		margin: 0 auto;
 		text-align: center;
+		grid-area: footer;
 	}
 
 	main {
 		max-width: 1000px;
 		margin: 0 auto;
+		grid-area: main;
+	}
+
+	@media (min-width: 1500px) {
+		:global(body) {
+			display: grid;
+			grid-template-areas: 
+				"logo main"
+				"nav main"
+				"footer main";
+			grid-auto-columns: 300px 1fr;
+			grid-template-rows: 1fr 3fr 1fr;
+			align-items: start;
+		}
+	
+		:global(nav), :global(.logo), footer {
+			position: fixed;
+		}
+
+		footer {
+			left: 4em;
+			bottom: 4em;
+		}
+		:global(.logo) {
+			left: 4em;
+			top: 0.5em;
+		}
+		:global(nav) {
+			left: 4em;
+			top: 200px;
+		}
 	}
 </style>

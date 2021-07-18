@@ -1,5 +1,8 @@
+<div class="logo">
+
 <h1>subfeed</h1>
 <p>for Spotify</p>
+</div>
 
 <style>
 	h1 {
@@ -12,6 +15,10 @@
 		font-family: DM Serif Display, serif;
 		font-size: 2em;
 		margin-top: -2.25em;
+	}
+
+	.logo {
+		grid-area: logo;
 	}
 
 	* {

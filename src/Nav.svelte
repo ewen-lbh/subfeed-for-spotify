@@ -46,6 +46,13 @@
 		align-items: center;
 		max-width: 1000px;
 		margin: 0 auto;
+		grid-area: nav;
+	}
+	@media (min-width: 1500px) {
+		nav {
+			flex-direction: column;
+			align-items: start;
+		}
 	}
 	button {
 		background: transparent;
