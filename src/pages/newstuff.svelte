@@ -11,6 +11,7 @@
 
 	let loadedArtists = 0
 	let totalArtists = 0
+	let releases: SimplifiedAlbum[] = []
 	let loadedStuff: string[] = []
 
 	function addLoadedStuff(...stuff: string[]) {
@@ -44,7 +45,6 @@
 		}
 		$followedArtists = artists
 
-		let releases: SimplifiedAlbum[] = []
 		for (const artist of artists) {
 			let paginatedReleases: CursorPaginated<SimplifiedAlbum> = (
 				await $spotify.get(
@@ -79,7 +79,7 @@
 	}
 </script>
 
-<Heading action="play all">New stuff for you</Heading>
+<Heading>New stuff for you</Heading>
 
 {#await getReleases()}
 	<div class="centered">
