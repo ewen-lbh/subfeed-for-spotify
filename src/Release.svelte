@@ -183,7 +183,7 @@
 				{:catch err}
 					<li class="errored">
 						Sorry, {err.message}.
-						<button on:click={window.location.reload}>Reload</button>
+						<button on:click={_ => window.location.reload()}>Reload</button>
 					</li>
 				{/await}
 			</ol>
