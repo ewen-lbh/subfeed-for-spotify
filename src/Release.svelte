@@ -9,7 +9,6 @@
 	import { intersection } from "./utils"
 	import { onMount } from "svelte"
 	import ToggleLiked from "./ToggleLiked.svelte"
-	import ArtistToFollow from "./ArtistToFollow.svelte"
 	import Icon from "./Icon.svelte"
 
 	export let release: SimplifiedAlbum
@@ -86,6 +85,10 @@
 				position: index,
 			},
 		})
+	}
+
+	async function enqueue(track: SimplifiedTrack) {
+		await $spotify.post(`me/player/queue?uri=${track.uri}`)
 	}
 </script>
 
@@ -166,6 +169,12 @@
 										releaseTracks.findIndex(t => t.id === id)
 									].is_saved = saved)}
 							/>
+							<button
+								class="enqueue"
+								title="Add to the current queue"
+								on:click|stopPropagation={_ => enqueue(track)}
+								><Icon name="enqueue" /></button
+							>
 						</li>
 					{/each}
 					{#if release.total_tracks > 50}
@@ -285,6 +294,22 @@
 		font-family: IBM Plex Mono, monospace;
 		font-weight: normal;
 		opacity: 0.5;
+	}
+
+	button.enqueue {
+		background: transparent;
+		border: none;
+		padding: 0;
+		margin-bottom: 0;
+		opacity: 0;
+		cursor: pointer;
+		font-weight: bold;
+		line-height: 1;
+		font-size: 1.2em;
+	}
+	.tracklist li:hover button.enqueue {
+		opacity: 1;
+		color: var(--vibrant);
 	}
 
 	@media (max-width: 700px) {

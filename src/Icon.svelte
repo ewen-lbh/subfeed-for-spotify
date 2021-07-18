@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let name: string
+	export let name: "play" | "heart" | "enqueue"
 	export let outlined: boolean = false
 </script>
 
@@ -15,6 +15,8 @@
 			<!-- ♥ -->
 			&#xe87d;
 		{/if}
+	{:else if name === "enqueue"}
+		+
 	{/if}
 </span>
 
