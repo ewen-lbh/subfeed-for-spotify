@@ -91,7 +91,7 @@
 	class="card"
 	style="--dark-muted:{colors.darkMuted};--vibrant:{colors.vibrant}"
 >
-	<a href={release.external_urls.spotify}>
+	<a href={release.external_urls.spotify} class="cover-link">
 		<img
 			src={release.images[0].url}
 			alt="Cover art of {release.name}"
@@ -278,5 +278,20 @@
 		font-family: IBM Plex Mono, monospace;
 		font-weight: normal;
 		opacity: 0.5;
+	}
+
+	@media (max-width: 700px) {
+		.card {
+			grid-template-columns: 1fr;
+			grid-template-rows: min(25vh, 300px) 1fr;
+		}
+		.cover {
+			width: 25vh;
+			height: 25vh;
+		}
+		.cover-link {
+			display: flex;
+			justify-content: center;
+		}
 	}
 </style>
