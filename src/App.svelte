@@ -5,6 +5,7 @@
 	import Newstuff from "./pages/newstuff.svelte"
 	import Maybefollow from "./pages/maybefollow.svelte"
 	import Login from "./pages/login.svelte"
+	import Morningplaylist from "./pages/morningplaylist.svelte"
 
 	let current = "newstuff"
 </script>
@@ -21,6 +22,8 @@
 	<Checkitout /> -->
 	{:else if current == "maybefollow"}
 		<Maybefollow />
+	{:else if current == "morningplaylist"}
+		<Morningplaylist />
 	{:else}
 		<h1>404</h1>
 	{/if}

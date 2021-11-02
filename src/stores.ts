@@ -2,7 +2,7 @@ import axios from "axios"
 import type { AxiosInstance } from "axios"
 import { derived, Readable, Writable, writable } from "svelte/store"
 import { readTokensFromLocalStorage, refreshToken, Tokens } from "./pkce"
-import type { SimplifiedArtist, SavedTrack } from "./types"
+import type { SimplifiedArtist, SavedTrack, AudioFeatures } from "./types"
 
 export let tokens: Writable<Tokens> = writable(readTokensFromLocalStorage())
 
@@ -50,3 +50,5 @@ export let spotify: Readable<AxiosInstance> = derived(
 export let followedArtists: Writable<SimplifiedArtist[]> = writable([])
 
 export let library: Writable<SavedTrack[]> = writable([])
+
+export let analyses: Writable<{[trackID: string]: AudioFeatures}> = writable({})

@@ -36,6 +36,11 @@
 		class:current={current == "maybefollow"}
 		{disabled}>maybefollow</button
 	>
+	<button
+		on:click={e => dispatch("navigate", "morningplaylist")}
+		class:current={current == "morningplaylist"}
+		{disabled}>morningplaylist</button
+	>
 	<button id="logout" on:click={logout}>logout</button>
 </nav>
 
