@@ -79,10 +79,13 @@
 
 			for (const artist of artistsSavedTracks) {
 				if (artist.savedTracks.length >= 5) {
-					artistsToFollow.push({
-						...(await $spotify.get(artist.href)).data,
-						savedTracks: artist.savedTracks,
-					})
+					artistsToFollow = [
+						...artistsToFollow,
+						{
+							...(await $spotify.get(artist.href)).data,
+							savedTracks: artist.savedTracks,
+						},
+					]
 				}
 			}
 			window.localStorage.setItem(
